@@ -1,0 +1,14 @@
+# Ignore environment variables
+.env
+
+# Ignore virtual environments
+venv/
+__pycache__/
+*.pyc
+
+# Ignore notebook junk
+.ipynb_checkpoints/
+
+# Ignore data files
+*.csv
+*.xlsx
