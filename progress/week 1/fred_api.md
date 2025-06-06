@@ -3,12 +3,10 @@
 # U.S. Economic Indicators by Category
 
 ## 1. Output & National Accounts
-- GDP (Nominal): `GDP`, `NGDPSAXDCUSQ`
 - Real GDP: `GDPC1`
 - Real GDP per capita: `A939RX0Q048SBEA`
 - Gross Domestic Income (GDI): `GDI`
 - Personal Income: `PINCOME`
-- Personal Consumption Expenditures (Nominal): `PCEC`
 - Real Personal Consumption Expenditures: `PCEC96`
 - Gross Private Domestic Investment (Total): `W987RC1Q027SBEA`
 - Net Private Domestic Investment: `W790RC1Q027SBEA`
@@ -43,8 +41,6 @@
     - Velocity of M2 Money Stock: `M2V`
     - Real M2 Money Stock: `M2REAL`
 - U.S. Dollar Indexes:
-    - Nominal Broad U.S. Dollar Index: `DTWEXBGS`
-    - Nominal Advanced Foreign Economies U.S. Dollar Index: `DTWEXAFEGS`
 
 ## 7. Prices & Inflation
 - Consumer Price Inflation: `FPCPITOTLZGUSA`
@@ -58,14 +54,15 @@
 - Population: `B230RC0Q173SBEA`
 - Population Growth for the United States: `SPPOPGROWUSA`
 
----
+## 10. Economic Policy Uncertainty
+- Economic Policy Uncertainty Index for the United States of America: `USEPUINDXD`
+- ---
 
 # Japan Economic Indicators by Category
 
 ## 1. Output & National Accounts
 - Real Gross Domestic Product for Japan: `JPNRGDPEXP`
 - Gross Domestic Product for Japan: `JPNNGDP`
-- Nominal Gross Domestic Product for Japan: `NGDPSAXDCJPQ`
 - Real Final Consumption Expenditure for Japan: `NCRSAXDCJPQ`
 - Real Public Investment for Japan: `JPNRGDPPIN`
 - Real Government Consumption for Japan: `JPNRGDPGC`
@@ -129,7 +126,7 @@
 - Population Growth for Japan: `SPPOPGROWJPN`
 
 ## 9. Economic Policy Uncertainty
-- Economic Policy Uncertainty Index for United States: `USEPUINDXD`
+- Economic Policy Uncertainty Index for Japan: `JPNEPUINDXM`
 
 ---
 
@@ -138,7 +135,6 @@
 ## 1. Output & National Accounts
 - Real Gross Domestic Product for Germany: `CLVMNACSCAB1GQDE`
 - Gross Domestic Product for Germany: `CPMNACSCAB1GQDE`
-- Nominal Gross Domestic Product for Germany: `NGDPSAXDCDEQ`
 - Real Final Consumption Expenditure for Germany: `NCRSAXDCDEQ`
 - Government Final Consumption Expenditure in Germany: `DEUGFCEQDSNAQ`
 - Private Final Consumption Expenditure in Germany: `DEUPFCEQDSNAQ`
@@ -217,7 +213,6 @@
 ## 1. Output & National Accounts
 - Gross Domestic Product for China: `MKTGDPCNA646NWDB`
 - Real Gross Domestic Product for China: `NGDPRXDCCNA`
-- Nominal Gross Domestic Product for China: `NGDPXDCCNA`
 - Gross National Income for China: `MKTGNICNA646NWDB`
 - Real Final Consumption Expenditure for China: `NCRXDCCNA`
 - Real Changes in Inventories for China: `NINVRXDCCNA`
@@ -293,7 +288,6 @@
 ## 1. Output & National Accounts
 - Real Gross Domestic Product for Canada: `NGDPRSAXDCCAQ`
 - Gross Domestic Product for Canada: `MKTGDPCAA646NWDB`
-- Nominal Gross Domestic Product for Canada: `NGDPSAXDCCAQ`
 - Real Final Consumption Expenditure for Canada: `NCRSAXDCCAQ`
 - Real General Government Final Consumption Expenditure for Canada: `NCGGRSAXDCCAQ`
 - Government Final Consumption Expenditure in Canada: `CANGFCEQDSNAQ`
@@ -321,7 +315,6 @@
 
 ## 4. International Trade & Balance of Payments
 - Real Exports of Goods and Services for Canada: `NXRSAXDCCAQ`
-- Nominal Exports of Goods for Canada: `NXGSAXDCCAQ`
 - International Trade: Imports: Value (Goods): Total for Canada: `XTIMVA01CAQ188S`
 - Imports of Goods and Services in Canada: `CANIMPORTQDSNAQ`
 - Balance of Payments for Canada: `CANBCAGDPBP6`
@@ -374,7 +367,6 @@
 ## 1. Output & National Accounts
 - Real Gross Domestic Product for Mexico: `NGDPRSAXDCMXQ`
 - Gross Domestic Product for Mexico: `MKTGDPMXA646NWDB`
-- Nominal Gross Domestic Product for Mexico: `NGDPSAXDCMXQ`
 - Real Final Consumption Expenditure for Mexico: `NCRSAXDCMXQ`
 - Real Exports of Goods and Services for Mexico: `NXRSAXDCMXQ`
 - Gross National Income for Mexico: `MKTGNIMXA646NWDB`
