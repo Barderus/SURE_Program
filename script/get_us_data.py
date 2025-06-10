@@ -23,7 +23,6 @@ SERIES_LIST = {
     "A939RX0Q048SBEA": {"units": "lin", "frequency": "q"},
     "FEDFUNDS": {"units": "lin", "frequency": "m"},
     "UMCSENT": {"units": "lin", "frequency": "m"},
-    # Placeholder: Consumer Confidence Index
 }
 
 READABLE_NAMES = {
@@ -39,7 +38,6 @@ READABLE_NAMES = {
     "A939RX0Q048SBEA": "Real_GDP_Per_Capita",
     "FEDFUNDS": "Federal_Funds_Rate",
     "UMCSENT": "Consumer_Sentiment",
-    # Placeholder: Consumer Confidence Index
 }
 
 # --- Functions ---
@@ -80,7 +78,7 @@ def collect_us_data():
 
 def save_to_csv(df, prefix="us_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"{prefix}_{timestamp}.csv"
+    filename = f"../data/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

@@ -23,7 +23,6 @@ FRED_SERIES = {
     "INTGSTJPM193N": {"units": "lin", "frequency": "m"},
     "INTGSBJPM193N": {"units": "lin", "frequency": "m"},
     "DEXJPUS": {"units": "lin", "frequency": "d"},
-    # Placeholder: Consumer Confidence Index
 }
 
 READABLE_NAMES = {
@@ -39,7 +38,6 @@ READABLE_NAMES = {
     "INTGSTJPM193N": "T_Bills",
     "INTGSBJPM193N": "Gov_Bonds",
     "DEXJPUS": "Exchange_Rate_Yen_to_USD",
-    # Placeholder: Consumer Confidence Index
 }
 
 # --- Functions ---
@@ -79,7 +77,7 @@ def collect_japan_data():
 
 def save_to_csv(df, prefix="japan_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"{prefix}_{timestamp}.csv"
+    filename = f"../data/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

@@ -21,7 +21,6 @@ FRED_SERIES = {
     "INTGSBMXM193N": {"units": "lin", "frequency": "m"},
     "FXRATEMXA618NUPN": {"units": "lin", "frequency": "a"},
     "XRNCUSMXA618NRUG": {"units": "lin", "frequency": "a"},
-    # Placeholder: Consumer Confidence Index
 }
 
 # --- Readable Names ---
@@ -36,7 +35,6 @@ READABLE_NAMES = {
     "INTGSBMXM193N": "Gov_Bonds_Rate",
     "FXRATEMXA618NUPN": "Exchange_Rate_USD",
     "XRNCUSMXA618NRUG": "Market_Exchange_Rate"
-    # Placeholder: Consumer Confidence Index
 }
 
 # --- World Bank Series ---

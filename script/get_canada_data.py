@@ -27,7 +27,7 @@ FRED_SERIES = {
     "INTGSBCAM193N": {"units": "lin", "frequency": "m"},
     "DEXCAUS": {"units": "lin", "frequency": "d"},
     "CCUSSP01CAM650N": {"units": "lin", "frequency": "m"},
-    # Placeholder: Consumer Confidence Index
+    "CSCICP03CAM665S": {"units": "lin", "frequency": "m"},
 }
 
 READABLE_NAMES = {
@@ -45,9 +45,8 @@ READABLE_NAMES = {
     "INTGSTCAM193N": "T_Bills",
     "INTGSBCAM193N": "Gov_Bonds",
     "DEXCAUS": "CAD_to_USD_Exchange",
-    "CCUSSP01CAM650N": "USD_to_CAD_End_of_Period"
-    # Placeholder: Consumer Confidence Index
-
+    "CCUSSP01CAM650N": "USD_to_CAD_End_of_Period",
+    "CSCICP03CAM665S": "CCI"
 }
 
 # --- Functions ---
@@ -115,7 +114,7 @@ def collect_canada_data():
 
 def save_to_csv(df, prefix="canada_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"{prefix}_{timestamp}.csv"
+    filename = f"../data/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

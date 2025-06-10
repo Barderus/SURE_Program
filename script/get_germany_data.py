@@ -25,7 +25,6 @@ FRED_SERIES = {
     "INTGSTDEM193N": {"units": "lin", "frequency": "m"},
     "INTGSBDEM193N": {"units": "lin", "frequency": "m"},
     "XRNCUSDEA618NRUG": {"units": "lin", "frequency": "a"},
-    # Placeholder: Consumer Confidence Index
 }
 
 READABLE_NAMES = {
@@ -42,7 +41,6 @@ READABLE_NAMES = {
     "INTGSTDEM193N": "T_Bills",
     "INTGSBDEM193N": "Gov_Bonds",
     "XRNCUSDEA618NRUG": "Exchange_Rate_FRED",
-    # Placeholder: Consumer Confidence Index
 }
 
 # --- Functions ---
@@ -109,7 +107,7 @@ def collect_germany_data():
 
 def save_to_csv(df, prefix="germany_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"{prefix}_{timestamp}.csv"
+    filename = f"../data/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

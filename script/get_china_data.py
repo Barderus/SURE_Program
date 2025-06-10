@@ -23,7 +23,6 @@ FRED_SERIES = {
     "NGDPRXDCCNA": {"units": "lin", "frequency": "a"},
     "INTDSRCNM193N": {"units": "lin", "frequency": "m"},
     "CCUSSP02CNM650N": {"units": "lin", "frequency": "m"},
-    # Placeholder: Consumer Confidence Index
 
 }
 
@@ -41,7 +40,6 @@ READABLE_NAMES = {
     "NGDPRXDCCNA": "Real_GDP",
     "INTDSRCNM193N": "Discount_Rate",
     "CCUSSP02CNM650N": "Exchange_Rate_USD",
-    # Placeholder: Consumer Confidence Index
 
 }
 
@@ -115,7 +113,7 @@ def main():
     # Save to CSV
     if combined_df is not None:
         combined_df = combined_df.sort_values("date")
-        filename = f"china_combined_data_{datetime.now().strftime('%m-%d-%Y')}.csv"
+        filename = f"../data/china_combined_data_{datetime.now().strftime('%m-%d-%Y')}.csv"
         combined_df.to_csv(filename, index=False)
         print(f"\nData saved to {filename}")
     else:
