@@ -4,22 +4,22 @@
 ## Main indicators for the US:
 - Economic Policy Uncertainty Index for the United States of America: `USEPUINDXD`
 - Industrial Production: Total Index: `INDPRO`
-- 10-Year Treasury Constant Maturity Minus 2-Year Treasury Constant Maturity (T10Y2Y)
+- 10-Year Treasury Constant Maturity Minus 2-Year Treasury Constant Maturity `T10Y2Y`
 - Consumer Price Inflation: `FPCPITOTLZGUSA`
 - Unemployment Rate: `UNRATE`
 - Real Net Exports of Goods and Services: `NETEXC`
 - Trade Balance (Goods and Services): `BOPGSTB`
-- OECD based Recession Indicators for the United States from the Peak through the Trough (DISCONTINUED) (USARECDM)
+- OECD based Recession Indicators for the United States from the Peak through the Trough (DISCONTINUED) `USARECDM`
 - Real GDP: `GDPC1`
 - Real GDP per capita: `A939RX0Q048SBEA`
 - Interest Rate: `FEDFUNDS` (Federal Funds Effective Rate)
-- Consumer confidence index ?
+- Consumer confidence index: `https://db.nomics.world/OECD/MEI_CLI/CSCICP03.USA.M?tab=chart`
 ---
 
 ## Main indicators for Japan:
 - Economic Policy Uncertainty Index for Japan: `JPNEPUINDXM`
 - Production, Sales, Work Started and Orders: Production Volume: Economic Activity: Industry (Except Construction) for Japan `JPNPROINDAISMEI`
-- Yield Spread?
+- Yield Spread: `INTGSBJPM193N`, 2Y: https://www.mof.go.jp/english/policy/jgbs/reference/interest_rate/index.htm
 - Inflation, consumer prices (annual %): `FPCPITOTLZGJPN`
 - Unemployment Rate (Ages 15 to 64) for Japan: `LRUN64TTJPA156S`
 - Real Net Exports of Good and Services for Japan: `JPNRGDPNGS`
@@ -30,13 +30,13 @@
 - Interest Rates, Government Securities, Treasury Bills for Japan: `INTGSTJPM193N`
 - Interest Rates, Government Securities, Government Bonds for Japan: `INTGSBJPM193N`
 - Japanese Yen to U.S. Dollar Spot Exchange Rate `DEXJPUS`
-- Consumer Confidence Index
+- Consumer Confidence Index: https://db.nomics.world/OECD/MEI_CLI/CSCICP03.JPN.M?tab=chart
 ---
 
 ## Main indicators for the Germany:
 - Economic Policy Uncertainty Index for Germany: `DEEPUINDXM`
 - Index of Industrial Production for Germany `A018ADDEA338NNBR`
-- Yield Spread?
+- Yield Spread: `INTGSBDEM193N`, 2Y: https://data.ecb.europa.eu/ API
 - Inflation, consumer prices for Germany: `FPCPITOTLZGDEU`
 - Unemployment to Population Rate: All Ages: All Persons for Germany: `LRUPTTTTDEQ156S`
 - Imports of Goods and Services in Germany: `DEUIMPORTQDSNAQ`
@@ -49,13 +49,13 @@
 - Interest Rates, Government Securities, Government Bonds for Germany: `INTGSBDEM193N`
 - Exchange Rate (Local currency per 1 USD): `https://data.worldbank.org/indicator/PA.NUS.FCRF?locations=de`
 - Exchange Rate (market + estimated) for Germany: `XRNCUSDEA618NRUG`
-- Consumer Confidence Index
+- Consumer Confidence Index: `https://db.nomics.world/OECD/MEI_CLI/CSCICP03.DEU.M?tab=chart`
 ---
 
 ## Main indicators for China:
 - Economic Policy Uncertainty Index for China `CHIEPUINDXM`
-- Production: Industry: Total Industry Excluding Construction for China (CHNPRINTO01IXPYM)
-- Yield Spread?
+- Production: Industry: Total Industry Excluding Construction for China `CHNPRINTO01IXPYM`
+- Yield Spread: `INTDSRCNM193N`, 2Y: `https://yield.chinabond.com.cn/cbweb-pbc-web/pbc/showHistory?locale=en_US`
 - Inflation, consumer prices for China: `FPCPITOTLZGCHN`
 - Unemployment Rate for China: `https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?locations=CN`
 - Real Imports of Goods and Services for China: `NMRXDCCNA`
@@ -68,7 +68,7 @@
 - Real GDP per capita: `https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=CN`
 - Interest Rates, Discount Rate for China: `INTDSRCNM193N`
 - Currency Conversions: US Dollar Exchange Rate: Spot, End of Period: National Currency: USD for China: `CCUSSP02CNM650N`
-- Consumer Confidence Index
+- Consumer Confidence Index: https://db.nomics.world/OECD/MEI_CLI/CSCICP03.CHN.M?tab=chart
 ---
 
 ## Main indicators for Canada:
@@ -88,17 +88,18 @@
 - Interest Rates, Government Securities, Government Bonds for Canada: `INTGSBCAM193N`
 - Canadian Dollars to U.S. Dollar Spot Exchange Rate `DEXCAUS`
 - Currency Conversions: US Dollar Exchange Rate: Spot, End of Period: USD: National Currency for Canada `CCUSSP01CAM650N`
-- Consumer Confidence Index
+- Consumer Confidence Index (DISCONTINUED): `CSCICP03CAM665S`
+
 ---
 
 ## Main indicators for Mexico:
-- World Uncertainty Index for Mexico (WUIMEX)
-- Production: Industry: Total Industry Including Construction for Mexico (MEXPRINTO02IXOBSAM)
-- Yield Spread?
+- World Uncertainty Index for Mexico `WUIMEX`
+- Production: Industry: Total Industry Including Construction for Mexico `MEXPRINTO02IXOBSAM`
+- Yield Spread: `INTGSBMXM193N`, 2Y: `Trading Economics API`
 - Inflation, consumer prices for Mexico: `FPCPITOTLZGMEX`
 - Unemployment Rate for Mexico: `https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?locations=MX&name_desc=false`
 - International Trade: Exports: Value (Goods): Total for Mexico: `XTEXVA01MXQ188S`
-- Recession indicator ?
+- Recession indicator: `?`
 - Real Gross Domestic Product for Mexico: `NGDPRSAXDCMXQ`
 - Real GDP per capita: `https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=MX`
 - Interest Rates, Discount Rate for Mexico: `INTDSRMXM193N`
@@ -106,4 +107,4 @@
 - Interest Rates, Government Securities, Government Bonds for Mexico: `INTGSBMXM193N`
 - Exchange Rate to U.S. Dollar for Mexico: `FXRATEMXA618NUPN`
 - Exchange Rate (market + estimated) for Mexico: `XRNCUSMXA618NRUG`
-- Consumer Confidence Index
+- Consumer Confidence Index: https://db.nomics.world/OECD/MEI_CLI/CSCICP03.MEX.M?tab=chart
