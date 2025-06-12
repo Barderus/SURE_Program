@@ -16,8 +16,6 @@ FRED_SERIES = {
     "FPCPITOTLZGCHN": {"units": "lin", "frequency": "a"},
     "NMRXDCCNA": {"units": "lin", "frequency": "a"},
     "NXRXDCCNA": {"units": "lin", "frequency": "a"},
-    "CHNXTEXVA01STSAQ": {"units": "lin", "frequency": "q"},
-    "CHNXTIMVA01STSAQ": {"units": "lin", "frequency": "q"},
     "CHNXTNTVA01STSAQ": {"units": "lin", "frequency": "q"},
     "CHNRECDM": {"units": "lin", "frequency": "m"},
     "NGDPRXDCCNA": {"units": "lin", "frequency": "a"},
@@ -28,25 +26,22 @@ FRED_SERIES = {
 
 # Human-readable column names
 READABLE_NAMES = {
-    "CHIEPUINDXM": "China_EPU_Index",
-    "CHNPRINTO01IXPYM": "Industrial_Production",
-    "FPCPITOTLZGCHN": "Inflation",
-    "NMRXDCCNA": "Real_Imports",
-    "NXRXDCCNA": "Real_Exports",
-    "CHNXTEXVA01STSAQ": "Exports_Value",
-    "CHNXTIMVA01STSAQ": "Imports_Value",
-    "CHNXTNTVA01STSAQ": "Net_Trade_Value",
-    "CHNRECDM": "Recession_Indicator",
-    "NGDPRXDCCNA": "Real_GDP",
-    "INTDSRCNM193N": "Discount_Rate",
-    "CCUSSP02CNM650N": "Exchange_Rate_USD",
-
+    "CHIEPUINDXM": "EPU_CHI",
+    "CHNPRINTO01IXPYM": "IP_CHI",
+    "FPCPITOTLZGCHN": "INF_CHI",
+    "NMRXDCCNA": "IM_CHI",
+    "NXRXDCCNA": "EX_CHI",
+    "CHNXTNTVA01STSAQ": "TB_CHI",
+    "CHNRECDM": "RECESS_CHI",
+    "NGDPRXDCCNA": "GDP_CHI",
+    "INTDSRCNM193N": "10YS_CHI",
+    "CCUSSP02CNM650N": "EXR_CHI",
 }
 
 # World Bank series configuration
 WORLD_BANK_SERIES = {
-    "SL.UEM.TOTL.ZS": "Unemployment_Rate",
-    "NY.GDP.PCAP.CD": "GDP_Per_Capita"
+    "SL.UEM.TOTL.ZS": "UNEMP_CHI",
+    "NY.GDP.PCAP.CD": "GDPC_CHI"
 }
 
 # --- Functions ---
@@ -113,7 +108,7 @@ def main():
     # Save to CSV
     if combined_df is not None:
         combined_df = combined_df.sort_values("date")
-        filename = f"../data/china_combined_data_{datetime.now().strftime('%m-%d-%Y')}.csv"
+        filename = f"../data/raw/china_combined_data_{datetime.now().strftime('%m-%d-%Y')}.csv"
         combined_df.to_csv(filename, index=False)
         print(f"\nData saved to {filename}")
     else:

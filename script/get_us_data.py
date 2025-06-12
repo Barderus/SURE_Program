@@ -5,7 +5,6 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # --- Configuration ---
-
 load_dotenv()
 API_KEY = os.getenv("FRED_API_KEY")
 BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
@@ -26,22 +25,21 @@ SERIES_LIST = {
 }
 
 READABLE_NAMES = {
-    "USEPUINDXD": "US_EPU_Index",
-    "INDPRO": "Industrial_Production",
-    "T10Y2Y": "Yield_Spread_10Y_2Y",
-    "FPCPITOTLZGUSA": "Consumer_Inflation",
-    "UNRATE": "Unemployment_Rate",
-    "NETEXC": "Real_Net_Exports",
-    "BOPGSTB": "Trade_Balance",
-    "USARECDM": "Recession_Indicator",
-    "GDPC1": "Real_GDP",
-    "A939RX0Q048SBEA": "Real_GDP_Per_Capita",
-    "FEDFUNDS": "Federal_Funds_Rate",
-    "UMCSENT": "Consumer_Sentiment",
+    "USEPUINDXD": "EPU_USA",
+    "INDPRO": "IP_USA",
+    "T10Y2Y": "YS_USA",
+    "FPCPITOTLZGUSA": "INF_USA",
+    "UNRATE": "UNEMP_USA",
+    "NETEXC": "EX_USA",
+    "BOPGSTB": "TB_USA",
+    "USARECDM": "RECESS_USA",
+    "GDPC1": "GDP_USA",
+    "A939RX0Q048SBEA": "GDPC_USA",
+    "FEDFUNDS": "FFR_USA",
+    "UMCSENT": "CCI_USA",
 }
 
 # --- Functions ---
-
 def fetch_fred_series(series_id, options):
     print(f"Fetching {series_id}...")
     params = {
@@ -78,7 +76,7 @@ def collect_us_data():
 
 def save_to_csv(df, prefix="us_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"../data/{prefix}_{timestamp}.csv"
+    filename = f"../data/raw/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

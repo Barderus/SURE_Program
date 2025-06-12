@@ -21,26 +21,21 @@ FRED_SERIES = {
     "DEURECD": {"units": "lin", "frequency": "m"},
     "CLVMNACSCAB1GQDE": {"units": "lin", "frequency": "q"},
     "DEURGDPC": {"units": "lin", "frequency": "a"},
-    "INTDSRDEM193N": {"units": "lin", "frequency": "m"},
     "INTGSTDEM193N": {"units": "lin", "frequency": "m"},
     "INTGSBDEM193N": {"units": "lin", "frequency": "m"},
-    "XRNCUSDEA618NRUG": {"units": "lin", "frequency": "a"},
 }
 
 READABLE_NAMES = {
-    "DEEPUINDXM": "Germany_EPU_Index",
-    "A018ADDEA338NNBR": "Industrial_Production",
-    "FPCPITOTLZGDEU": "CPI_Inflation",
-    "LRUPTTTTDEQ156S": "Unemployment_Rate",
-    "DEUIMPORTQDSNAQ": "Imports",
-    "DEUEXPORTQDSNAQ": "Exports",
-    "DEURECD": "Recession_Indicator",
-    "CLVMNACSCAB1GQDE": "Real_GDP",
-    "DEURGDPC": "Real_GDP_Per_Capita",
-    "INTDSRDEM193N": "Discount_Rate",
-    "INTGSTDEM193N": "T_Bills",
-    "INTGSBDEM193N": "Gov_Bonds",
-    "XRNCUSDEA618NRUG": "Exchange_Rate_FRED",
+    "DEEPUINDXM": "EPU_GER",
+    "A018ADDEA338NNBR": "IP_GER",
+    "FPCPITOTLZGDEU": "INF_GER",
+    "LRUPTTTTDEQ156S": "UNEMP_GER",
+    "DEUIMPORTQDSNAQ": "IM_GER",
+    "DEUEXPORTQDSNAQ": "EX_GER",
+    "DEURECD": "RECESS_GER",
+    "CLVMNACSCAB1GQDE": "GDP_GER",
+    "DEURGDPC": "GDPC_GER",
+    "INTGSBDEM193N": "10YS_GER",
 }
 
 # --- Functions ---
@@ -107,7 +102,7 @@ def collect_germany_data():
 
 def save_to_csv(df, prefix="germany_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"../data/{prefix}_{timestamp}.csv"
+    filename = f"../data/raw/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

@@ -5,7 +5,6 @@ from datetime import datetime
 from dotenv import load_dotenv
 
 # --- Configuration ---
-
 load_dotenv()
 API_KEY = os.getenv("FRED_API_KEY")
 FRED_BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
@@ -19,29 +18,25 @@ FRED_SERIES = {
     "JPNRECDP": {"units": "lin", "frequency": "m"},
     "JPNRGDPEXP": {"units": "lin", "frequency": "a"},
     "JPNRGDPC": {"units": "lin", "frequency": "a"},
-    "INTDSRJPM193N": {"units": "lin", "frequency": "m"},
     "INTGSTJPM193N": {"units": "lin", "frequency": "m"},
     "INTGSBJPM193N": {"units": "lin", "frequency": "m"},
     "DEXJPUS": {"units": "lin", "frequency": "d"},
 }
 
 READABLE_NAMES = {
-    "JPNEPUINDXM": "Japan_EPU_Index",
-    "JPNPROINDAISMEI": "Industrial_Production",
-    "FPCPITOTLZGJPN": "CPI_Inflation",
-    "LRUN64TTJPA156S": "Unemployment_Rate_15_64",
-    "JPNRGDPNGS": "Real_Net_Exports",
-    "JPNRECDP": "Recession_Indicator",
-    "JPNRGDPEXP": "Real_GDP",
-    "JPNRGDPC": "Real_GDP_Per_Capita",
-    "INTDSRJPM193N": "Discount_Rate",
-    "INTGSTJPM193N": "T_Bills",
-    "INTGSBJPM193N": "Gov_Bonds",
-    "DEXJPUS": "Exchange_Rate_Yen_to_USD",
+    "JPNEPUINDXM": "EPU_JAP",
+    "JPNPROINDAISMEI": "IP_JAP",
+    "FPCPITOTLZGJPN": "INF_JAP",
+    "LRUN64TTJPA156S": "UNEMP_JAP",
+    "JPNRGDPNGS": "EX_JAP",
+    "JPNRECDP": "RECESS_JAP",
+    "JPNRGDPEXP": "GDP_JAP",
+    "JPNRGDPC": "GDPC_JAP",
+    "INTGSBJPM193N": "10YS_JAP",
+    "DEXJPUS": "EXR_JAP",
 }
 
 # --- Functions ---
-
 def fetch_fred_series(series_id, options):
     print(f"Fetching FRED: {series_id}")
     params = {
@@ -77,7 +72,7 @@ def collect_japan_data():
 
 def save_to_csv(df, prefix="japan_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"../data/{prefix}_{timestamp}.csv"
+    filename = f"../data/raw/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

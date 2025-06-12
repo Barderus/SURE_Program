@@ -21,36 +21,27 @@ FRED_SERIES = {
     "CANRECDM": {"units": "lin", "frequency": "m"},
     "NGDPRSAXDCCAQ": {"units": "lin", "frequency": "q"},
     "CANRGDPC": {"units": "lin", "frequency": "a"},
-    "INTDSRCAM193N": {"units": "lin", "frequency": "m"},
-    "IRSTCB01CAM156N": {"units": "lin", "frequency": "m"},
-    "INTGSTCAM193N": {"units": "lin", "frequency": "m"},
     "INTGSBCAM193N": {"units": "lin", "frequency": "m"},
     "DEXCAUS": {"units": "lin", "frequency": "d"},
-    "CCUSSP01CAM650N": {"units": "lin", "frequency": "m"},
     "CSCICP03CAM665S": {"units": "lin", "frequency": "m"},
 }
 
 READABLE_NAMES = {
-    "CANEPUINDXM": "Canada_EPU_Index",
-    "CANPRINTO01MLSAM": "Industrial_Production",
-    "IRLTLT01CAQ156N": "10Y_Bond_Yield",
-    "FPCPITOTLZGCAN": "CPI_Inflation",
-    "NXRSAXDCCAQ": "Real_Exports",
-    "CANIMPORTQDSNAQ": "Real_Imports",
-    "CANRECDM": "Recession_Indicator",
-    "NGDPRSAXDCCAQ": "Real_GDP",
-    "CANRGDPC": "Real_GDP_Per_Capita",
-    "INTDSRCAM193N": "Discount_Rate",
-    "IRSTCB01CAM156N": "Central_Bank_Rate",
-    "INTGSTCAM193N": "T_Bills",
-    "INTGSBCAM193N": "Gov_Bonds",
-    "DEXCAUS": "CAD_to_USD_Exchange",
-    "CCUSSP01CAM650N": "USD_to_CAD_End_of_Period",
-    "CSCICP03CAM665S": "CCI"
+    "CANEPUINDXM": "EPU_CAN",
+    "CANPRINTO01MLSAM": "IP_CAN",
+    "IRLTLT01CAQ156N": "10YS_CAN",
+    "FPCPITOTLZGCAN": "INF_CAN",
+    "NXRSAXDCCAQ": "EX_CAN",
+    "CANIMPORTQDSNAQ": "IM_CAN",
+    "CANRECDM": "RECESS_CAN",
+    "NGDPRSAXDCCAQ": "GDP_CAN",
+    "CANRGDPC": "GDPC_CAN",
+    "INTGSBCAM193N": "GBR_CAN",
+    "DEXCAUS": "EXR_CAN",
+    "CSCICP03CAM665S": "CCI_CAN"
 }
 
 # --- Functions ---
-
 def fetch_fred_series(series_id, options):
     print(f"Fetching FRED: {series_id}")
     params = {
@@ -114,7 +105,7 @@ def collect_canada_data():
 
 def save_to_csv(df, prefix="canada_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"../data/{prefix}_{timestamp}.csv"
+    filename = f"../data/raw/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

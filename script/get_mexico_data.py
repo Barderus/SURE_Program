@@ -16,31 +16,35 @@ FRED_SERIES = {
     "FPCPITOTLZGMEX": {"units": "lin", "frequency": "a"},
     "XTEXVA01MXQ188S": {"units": "lin", "frequency": "q"},
     "NGDPRSAXDCMXQ": {"units": "lin", "frequency": "q"},
-    "INTDSRMXM193N": {"units": "lin", "frequency": "m"},
-    "INTGSTMXM193N": {"units": "lin", "frequency": "m"},
+    "IRLTST01MXM156N": {"units": "lin", "frequency": "m"},
     "INTGSBMXM193N": {"units": "lin", "frequency": "m"},
     "FXRATEMXA618NUPN": {"units": "lin", "frequency": "a"},
     "XRNCUSMXA618NRUG": {"units": "lin", "frequency": "a"},
+    "LRHUTTTTMXM156S": {"units": "lin", "frequency": "m"},
+    "NYGDPPCAPKDMEX": {"units": "lin", "frequency": "a"},
+    "XTEXVA01MXM667S": {"units": "lin", "frequency": "m"},
+    "MEXRECD": {"units": "lin", "frequency": "d"}, # Convert to monthly
 }
 
 # --- Readable Names ---
 READABLE_NAMES = {
-    "WUIMEX": "World_Uncertainty_Index",
-    "MEXPRINTO02IXOBSAM": "Industrial_Production",
-    "FPCPITOTLZGMEX": "Inflation",
-    "XTEXVA01MXQ188S": "Exports_Value",
-    "NGDPRSAXDCMXQ": "Real_GDP",
-    "INTDSRMXM193N": "Discount_Rate",
-    "INTGSTMXM193N": "Treasury_Bills_Rate",
-    "INTGSBMXM193N": "Gov_Bonds_Rate",
-    "FXRATEMXA618NUPN": "Exchange_Rate_USD",
-    "XRNCUSMXA618NRUG": "Market_Exchange_Rate"
+    "WUIMEX": "EPU_MEX",
+    "MEXPRINTO02IXOBSAM": "IP_MEX",
+    "FPCPITOTLZGMEX": "INF_MEX",
+    "NGDPRSAXDCMXQ": "GDP_MEX",
+    "INTGSBMXM193N": "1OYS_MEX",
+    "IRLTST01MXM156N": "2YS_MEX",
+    "FXRATEMXA618NUPN": "EXR_MEX",
+    "LRHUTTTTMXM156S": "UNEMP_MEX",
+    "NYGDPPCAPKDMEX": "GDPC_MEX",
+    "XTEXVA01MXM667S": "EX_MEX",
+    "MEXRECD": "RECESS_MEX"
 }
 
 # --- World Bank Series ---
 WORLD_BANK_SERIES = {
-    "SL.UEM.TOTL.ZS": "Unemployment_Rate",
-    "NY.GDP.PCAP.CD": "GDP_Per_Capita"
+    "SL.UEM.TOTL.ZS": "UNEMP_MEX+",
+    "NY.GDP.PCAP.CD": "GDPC_MEX+"
 }
 
 # --- Fetch FRED Series ---
@@ -109,12 +113,11 @@ def merge_world_bank_data(df):
 # --- Save ---
 def save_to_csv(df, prefix="mexico_combined_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"{prefix}_{timestamp}.csv"
+    filename = f"../data/raw/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename
 
-# --- Main ---
 def main():
     print("Starting Mexico data collection...\n")
     df = collect_mexico_data()
