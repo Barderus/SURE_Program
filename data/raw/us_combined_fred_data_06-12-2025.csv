@@ -1,4 +1,4 @@
-date,US_EPU_Index,Industrial_Production,Yield_Spread_10Y_2Y,Consumer_Inflation,Unemployment_Rate,Real_Net_Exports,Trade_Balance,Recession_Indicator,Real_GDP,Real_GDP_Per_Capita,Federal_Funds_Rate,Consumer_Sentiment
+date,EPU_USA,IP_USA,YS_USA,INF_USA,UNEMP_USA,EX_USA,TB_USA,RECESS_USA,GDP_USA,GDPC_USA,FFR_USA,CCI_USA
 1919-01-01,,4.8654,,,,,,,,,,
 1919-02-01,,4.6504,,,,,,,,,,
 1919-03-01,,4.516,,,,,,,,,,
@@ -1275,5 +1275,5 @@ date,US_EPU_Index,Industrial_Production,Yield_Spread_10Y_2Y,Consumer_Inflation,U
 2025-02-01,328.43,104.149,0.24,,4.1,,,,,,4.33,64.7
 2025-03-01,503.67,103.8865,0.31,,4.2,,,,,,4.33,57.0
 2025-04-01,560.88,103.8799,0.5,,4.2,,,,,,4.33,52.2
-2025-05-01,498.59,,0.5,,4.2,,,,,,4.33,
+2025-05-01,499.26,,0.5,,4.2,,,,,,4.33,
 2025-06-01,,,,,,,,,,,,
