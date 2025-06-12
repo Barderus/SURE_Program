@@ -1,0 +1,32 @@
+# Indicator Source Links
+
+get_canada_data.py
+- FRED API: https://fred.stlouisfed.org/
+- Bank of Canada Valet API: https://www.bankofcanada.ca/valet/
+
+get_china_data.py
+- FRED API: https://fred.stlouisfed.org/
+- People’s Bank of China: http://www.pbc.gov.cn/
+- OECD: https://data.oecd.org/
+- World Bank: https://data.worldbank.org/
+
+get_germany_data.py
+- FRED API: https://fred.stlouisfed.org/
+- OECD: https://data.oecd.org/
+- World Bank: https://data.worldbank.org/
+
+get_japan_data.py
+- FRED API: https://fred.stlouisfed.org/
+- Bank of Japan: https://www.boj.or.jp/en/statistics/
+- OECD: https://data.oecd.org/
+- World Bank: https://data.worldbank.org/
+
+get_us_data.py
+- FRED API: https://fred.stlouisfed.org/
+- OECD: https://data.oecd.org/
+- World Bank: https://data.worldbank.org/
+
+calculate_yield_spread.py
+- Reads 2‑year and 10‑year government bond yield data from collected CSVs
+  and computes the yield spread (10Y – 2Y).
+  No external data source – processes files like US-2Y, US-10Y CSVs.
