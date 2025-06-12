@@ -1,27 +1,19 @@
 import os
 import pandas as pd
 import requests
-import tradingeconomics as te
 from dotenv import load_dotenv
-import yfinance as yf
 
 
 # Load API keys from .env
 load_dotenv()
 FRED_API_KEY = os.getenv("FRED_API_KEY")
-TE_API_KEY = os.getenv("TE_API_KEY")
 
-# Login to TradingEconomics
-te.login(TE_API_KEY)
-
-# ---------- FRED 10Y Yield Series ----------
 fred_series = {
-    "US_10Y": "DGS10",
-    "Canada_10Y": "IRLTLT01CAM156N",
-    "Germany_10Y": "IRLTLT01DEM156N",
-    "Japan_10Y": "IRLTLT01JPM156N",
-    "Mexico_10Y": "IRLTLT01MXM156N",
-    "US_2Y": "DGS2"
+    "10YS_CAN": "IRLTLT01CAM156N",
+    "10YS_GER": "IRLTLT01DEM156N",
+    "10Y_JAP": "IRLTLT01JPM156N",
+    "10YS_MEX": "IRLTLT01MXM156N",
+    "2YS_MEX": "IRLTST01MXM156N"
 }
 
 def fetch_fred(label, series_id, start="1990-01-01"):
@@ -40,24 +32,7 @@ def fetch_fred(label, series_id, start="1990-01-01"):
     df = pd.DataFrame(data["observations"])
     df["date"] = pd.to_datetime(df["date"])
     df["value"] = pd.to_numeric(df["value"], errors="coerce")
-    return df.set_index("date")["value"].rename(label)
-
-# ---------- TradingEconomics 2Y Yield (Mexico only) ----------
-def fetch_te_2y_http(label, symbol):
-    url = f"https://api.tradingeconomics.com/markets/historical/{symbol}"
-    params = {
-        "c": TE_API_KEY,
-        "d1": "1990-01-01",
-        "format": "json"
-    }
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    data = response.json()
-    if not data or "Close" not in data[0]:
-        raise ValueError(f"No usable data for {label}")
-    df = pd.DataFrame(data)
-    df["Date"] = pd.to_datetime(df["Date"])
-    return df.set_index("Date")["Close"].rename(label)
+    return df[["date", "value"]].rename(columns={"value": label})
 
 # ---------- Canada 2Y from Bank of Canada ----------
 def fetch_canada_2y():
@@ -66,76 +41,81 @@ def fetch_canada_2y():
     data = response.json()
     obs = data["observations"]
     rows = [(pd.to_datetime(x["d"]), float(x["V122538"]["v"])) for x in obs if "v" in x["V122538"]]
-    df = pd.DataFrame(rows, columns=["date", "value"]).set_index("date")
-    return df["value"].rename("Canada_2Y")
+    return pd.DataFrame(rows, columns=["date", "2YS_CAN"])
 
-# ---------- Germany 2Y from ECB ----------
+# ---------- Germany 2Y from ECB (local CSV) ----------
 def fetch_germany_2y():
-    url = "https://sdw.ecb.europa.eu/quickviewexport.do?SERIES_KEY=FM.M.U2.EUR.4F.BB.U2_2Y.YLD&fileType=csv"
-    df = pd.read_csv(url, skiprows=5)
-    df = df[df["OBS_VALUE"] != "."]
-    df["TIME_PERIOD"] = pd.to_datetime(df["TIME_PERIOD"])
-    df["OBS_VALUE"] = pd.to_numeric(df["OBS_VALUE"])
-    return df.set_index("TIME_PERIOD")["OBS_VALUE"].rename("Germany_2Y")
+    file_path = "../data/raw/Germany-2Y.csv"
+    df = pd.read_csv(file_path)
+    df = df[df["price"] != "."]
+    df["date"] = pd.to_datetime(df["date"])
+    df["price"] = pd.to_numeric(df["price"])
+    return df.rename(columns={"price": "2YS_GER"})[["date", "2YS_GER"]]
 
-def fetch_china_yield_yf(label, symbol):
-    ticker = yf.Ticker(symbol)
-    hist = ticker.history(start="1990-01-01")
-    series = hist["Close"].rename(label)
-    series.index = pd.to_datetime(series.index)
-    return series
+# ---------- China from local CSV ----------
+def fetch_china_yield():
+    df_2y = pd.read_csv("../data/raw/China-2Y.csv", parse_dates=["date"])
+    df_10y = pd.read_csv("../data/raw/10YS_CHI.csv", parse_dates=["date"])
+    df_2y = df_2y[["date", "price"]].rename(columns={"price": "2YS_CHI"})
+    df_10y = df_10y[["date", "price"]].rename(columns={"price": "10YS_CHI"})
+    return pd.merge(df_2y, df_10y, on="date", how="outer").sort_values("date")
 
-china2 = fetch_china_yield_yf("China_2Y", "^CNY2Y")
-china10 = fetch_china_yield_yf("China_10Y", "^CNY10Y")
+# ---------- Japan from local CSV ----------
+def fetch_japan_yield():
+    df = pd.read_csv("../data/raw/Japan-2Y.csv")
+    df = df[df["price"] != "."]
+    df["date"] = pd.to_datetime(df["date"])
+    df["price"] = pd.to_numeric(df["price"])
+    return df.rename(columns={"price": "2YS_JAP"})[["date", "2YS_JAP"]]
+
+# ---------- Main Fetch and Save ----------
+def save_country_csv(country, df):
+    path = f"../data/raw/{country}_yields.csv"
+    df.to_csv(path, index=False)
+    print(f"Saved: {path}")
+
+# Canada
+can_10y = fetch_fred("10YS_CAN", fred_series["10YS_CAN"])
+can_2y = fetch_canada_2y()
+can_df = pd.merge(can_10y, can_2y, on="date", how="outer")
+save_country_csv("CAN", can_df)
+
+# Germany
+ger_10y = fetch_fred("10YS_GER", fred_series["10YS_GER"])
+ger_2y = fetch_germany_2y()
+
+# Ensure 'date' column is monthly
+ger_10y["date"] = pd.to_datetime(ger_10y["date"]).dt.to_period("M").dt.to_timestamp()
+ger_2y["date"] = pd.to_datetime(ger_2y["date"]).dt.to_period("M").dt.to_timestamp()
+
+# Rename for consistency
+ger_10y = ger_10y.rename(columns={"value": "10YS_GER"})
+ger_2y = ger_2y.rename(columns={"value": "2YS_GER"})
+
+# Merge on monthly date
+ger_df = pd.merge(ger_10y, ger_2y, on="date", how="outer").sort_values("date")
+
+# Save to CSV
+save_country_csv("GER", ger_df)
 
 
 
-# ---------- Japan 2Y ----------
-def fetch_japan_2y_yf():
-    ticker = yf.Ticker("^JPTY2Y")  # Yahoo Finance symbol for Japan 2Y yield
-    hist = ticker.history(start="1990-01-01")
-    series = hist["Close"].rename("Japan_2Y")
-    series.index = pd.to_datetime(series.index)
-    return series
 
 
-# ---------- Main Collection ----------
-series = []
 
-# Fetch FRED data
-for label, sid in fred_series.items():
-    try:
-        print(f"Fetching FRED: {label}")
-        series.append(fetch_fred(label, sid))
-    except Exception as e:
-        print(f"FRED error for {label}: {e}")
 
-# Fetch TE Mexico 2Y
-try:
-    print("Fetching TE: Mexico_2Y")
-    series.append(fetch_te_2y_http("Mexico_2Y", "MEX:government-bond-2-year-yield"))
-except Exception as e:
-    print(f"TE error for Mexico_2Y: {e}")
+# Mexico
+mex_10y = fetch_fred("10YS_MEX", fred_series["10YS_MEX"])
+mex_2y = fetch_fred("2YS_MEX", fred_series["2YS_MEX"])
+mex_df = pd.merge(mex_10y, mex_2y, on="date", how="outer")
+save_country_csv("MEX", mex_df)
 
-# Fetch Canada 2Y
-try:
-    print("Fetching Bank of Canada: Canada_2Y")
-    series.append(fetch_canada_2y())
-except Exception as e:
-    print(f"Canada 2Y error: {e}")
+# China
+china_df = fetch_china_yield()
+save_country_csv("CHI", china_df)
 
-# Fetch Germany 2Y
-try:
-    print("Fetching ECB: Germany_2Y")
-    series.append(fetch_germany_2y())
-except Exception as e:
-    print(f"Germany 2Y error: {e}")
-
-# ---------- Combine and Save ----------
-df_all = pd.concat(series, axis=1).sort_index()
-
-output_path = "../data/yield_data_full.csv"
-df_all.to_csv(output_path)
-print(f"Saved to {output_path}")
-print(df_all.tail())
-print(df_all.columns)
+# Japan
+jap_10y = fetch_fred("10YS_JAP", fred_series["10Y_JAP"])
+jap_2y = fetch_japan_yield()
+jap_df = pd.merge(jap_10y, jap_2y, on="date", how="outer")
+save_country_csv("JAP", jap_df)
