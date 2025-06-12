@@ -34,8 +34,4 @@
     - Also applies a consistent column naming scheme to avoid any conflicts.
 
 ## Final output file
-  - The final output file `merged_cleaned.csv` contains all the macroeconomic indicators for the requested countries.
-## Next steps
-- Run some EDA and look at trends over time  
-- Build visualizations  
-- Start feature engineering for modeling later on
+  - The final output file `master_file.csv` contains all the macroeconomic indicators for the requested countries.
