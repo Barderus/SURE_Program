@@ -21,7 +21,6 @@ FRED_SERIES = {
     "DEURECD": {"units": "lin", "frequency": "m"},
     "CLVMNACSCAB1GQDE": {"units": "lin", "frequency": "q"},
     "DEURGDPC": {"units": "lin", "frequency": "a"},
-    "INTGSTDEM193N": {"units": "lin", "frequency": "m"},
     "INTGSBDEM193N": {"units": "lin", "frequency": "m"},
 }
 
@@ -69,7 +68,7 @@ def fetch_worldbank_exchange_rate():
         response.raise_for_status()
         data = response.json()[1]
         df = pd.DataFrame([
-            {"year": item["date"], "Exchange_Rate_WB": item["value"]}
+            {"year": item["date"], "EXR_GER": item["value"]}
             for item in data if item["value"] is not None
         ])
         df["date"] = pd.to_datetime(df["year"], format="%Y").dt.to_period("Y").dt.to_timestamp()

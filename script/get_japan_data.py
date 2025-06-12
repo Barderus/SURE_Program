@@ -18,7 +18,6 @@ FRED_SERIES = {
     "JPNRECDP": {"units": "lin", "frequency": "m"},
     "JPNRGDPEXP": {"units": "lin", "frequency": "a"},
     "JPNRGDPC": {"units": "lin", "frequency": "a"},
-    "INTGSTJPM193N": {"units": "lin", "frequency": "m"},
     "INTGSBJPM193N": {"units": "lin", "frequency": "m"},
     "DEXJPUS": {"units": "lin", "frequency": "d"},
 }
