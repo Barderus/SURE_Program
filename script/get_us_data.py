@@ -15,12 +15,12 @@ SERIES_LIST = {
     "T10Y2Y": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGUSA": {"units": "lin", "frequency": "a"},
     "UNRATE": {"units": "lin", "frequency": "m"},
-    "NETEXC": {"units": "lin", "frequency": "q"},
+    "EXPGSC1": {"units": "lin", "frequency": "q"},
+    "IMPGSC1":{"units": "lin", "frequency": "q"},
     "BOPGSTB": {"units": "lin", "frequency": "q"},
     "USARECDM": {"units": "lin", "frequency": "m"},
     "GDPC1": {"units": "lin", "frequency": "q"},
     "A939RX0Q048SBEA": {"units": "lin", "frequency": "q"},
-    "FEDFUNDS": {"units": "lin", "frequency": "m"},
     "UMCSENT": {"units": "lin", "frequency": "m"},
 }
 
@@ -30,12 +30,11 @@ READABLE_NAMES = {
     "T10Y2Y": "YS_USA",
     "FPCPITOTLZGUSA": "INF_USA",
     "UNRATE": "UNEMP_USA",
-    "NETEXC": "EX_USA",
-    "BOPGSTB": "TB_USA",
+    "EXPGSC1": "EX_USA",
+    "IMPGSC1": "IM_USA",
     "USARECDM": "RECESS_USA",
     "GDPC1": "GDP_USA",
     "A939RX0Q048SBEA": "GDPC_USA",
-    "FEDFUNDS": "FFR_USA",
     "UMCSENT": "CCI_USA",
 }
 

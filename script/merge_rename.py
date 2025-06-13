@@ -5,9 +5,10 @@ import os
 selected_files = [
     "../data/raw/canada_combined_fred_data_06-12-2025.csv",
     "../data/raw/germany_combined_fred_data_06-12-2025.csv",
-    "../data/raw/japan_combined_fred_data_06-12-2025.csv",
-    "../data/raw/us_combined_fred_data_06-12-2025.csv",
-    "../data/raw/mexico_combined_data_06-12-2025.csv",
+    "../data/raw/japan_combined_fred_data_06-13-2025.csv",
+    "../data/raw/us_combined_fred_data_06-13-2025.csv",
+    "../data/raw/mexico_combined_data_06-13-2025.csv",
+    "../data/raw/china_combined_data_06-12-2025.csv",
     "../data/raw/CCI_OECD.csv",
     "../data/raw/CAN_yields.csv",
     "../data/raw/MEX_yields.csv",

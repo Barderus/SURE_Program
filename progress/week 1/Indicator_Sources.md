@@ -1,20 +1,20 @@
 # Required Macroeconomics variables per country
 
 ## Main indicators for the US:
-| Description                                                                                 | Series ID                 | READABLE_NAMES Entry         | Short Code Suggestion | Source              |
-|---------------------------------------------------------------------------------------------|----------------------------|------------------------------|------------------------|---------------------|
-| Economic Policy Uncertainty Index for the United States                                     | `USEPUINDXD`              | `US_EPU_Index`               | `EPU_USA`              | FRED                |
-| Industrial Production: Total Index                                                          | `INDPRO`                  | `Industrial_Production`      | `IP_USA`               | FRED                |
-| 10Y - 2Y Treasury Yield Spread**                                                            | `T10Y2Y`                  | `Yield_Spread`               | `YS_USA`               | FRED                |
-| Consumer Price Inflation                                                                    | `FPCPITOTLZGUSA`          | `Inflation`                  | `INF_USA`              | FRED                |
-| Unemployment Rate                                                                           | `UNRATE`                  | `Unemployment_Rate`          | `UNEMP_USA`            | FRED                |
-| Real Net Exports of Goods and Services                                                      | `NETEXC`                  | `Real_Net_Exports`           | `EX_USA`               | FRED                |
-| Trade Balance (Goods and Services)                                                          | `BOPGSTB`                 | `Trade_Balance`              | `TB_USA`               | FRED                |
-| Recession Indicators *(DISCONTINUED)*                                                       | `USARECDM`                | `Recession_Indicator`        | `RECESS_USA`           | FRED                |
-| Real Gross Domestic Product                                                                 | `GDPC1`                   | `Real_GDP`                   | `GDP_USA`              | FRED                |
-| Real GDP per capita                                                                         | `A939RX0Q048SBEA`         | `Real_GDP_Per_Capita`        | `GDPC_USA`             | FRED                |
-| Federal Funds Effective Rate                                                                | `FEDFUNDS`                | `Federal_Funds_Rate`         | `FFR_USA`              | FRED                |
-| Consumer Confidence Index                                                                   | `CSCICP03.USA.M`          | *(custom - via OECD API)*    | `CCI_USA`              | OECD                |
+| Description                                             | Series ID                 | READABLE_NAMES Entry      | Short Code Suggestion | Source              |
+|---------------------------------------------------------|----------------------------|---------------------------|-----------------------|---------------------|
+| Economic Policy Uncertainty Index for the United States | `USEPUINDXD`              | `US_EPU_Index`            | `EPU_USA`             | FRED                |
+| Industrial Production: Total Index                      | `INDPRO`                  | `Industrial_Production`   | `IP_USA`              | FRED                |
+| 10Y - 2Y Treasury Yield Spread**                        | `T10Y2Y`                  | `Yield_Spread`            | `YS_USA`              | FRED                |
+| Consumer Price Inflation                                | `FPCPITOTLZGUSA`          | `Inflation`               | `INF_USA`             | FRED                |
+| Unemployment Rate                                       | `UNRATE`                  | `Unemployment_Rate`       | `UNEMP_USA`           | FRED                |
+| Real Exports of Goods and Services                      | `EXPGSC1`                  | `Real_Exports`            | `EX_USA`              | FRED                |
+| Real imports of goods and services                      | `IMPGSC1`                 | `Real_Imports`            | `IMP_USA`             | FRED                |
+| Recession Indicators *(DISCONTINUED)*                   | `USARECDM`                | `Recession_Indicator`     | `RECESS_USA`          | FRED                |
+| Real Gross Domestic Product                             | `GDPC1`                   | `Real_GDP`                | `GDP_USA`             | FRED                |
+| Real GDP per capita                                     | `A939RX0Q048SBEA`         | `Real_GDP_Per_Capita`     | `GDPC_USA`            | FRED                |
+| Federal Funds Effective Rate                            | `FEDFUNDS`                | `Federal_Funds_Rate`      | `FFR_USA`             | FRED                |
+| Consumer Confidence Index                               | `CSCICP03.USA.M`          | *(custom - via OECD API)* | `CCI_USA`             | OECD                |
 
 Link sources:
 - Consumer confidence index: `https://db.nomics.world/OECD/MEI_CLI/CSCICP03.USA.M?tab=chart`
@@ -22,21 +22,22 @@ Link sources:
 
 ## Main indicators for Japan:
 
-| Description                                          | Series ID                   | READABLE_NAMES Entry         | Short Code Suggestion | Source               |
-|------------------------------------------------------|------------------------------|------------------------------|------------------------|----------------------|
-| Economic Policy Uncertainty Index for Japan          | `JPNEPUINDXM`               | `Japan_EPU_Index`            | `EPU_JAP`              | FRED                 |
-| Industrial Production (Excl. Construction) for Japan | `JPNPROINDAISMEI`           | `Industrial_Production`      | `IP_JAP`               | FRED                 |
-| 10-Year Government Bond Yield                        | `INTGSBJPM193N`             | `10Y_Bond_Yield`             | `10YS_JAP`             | FRED                 |
-| 2-Year Government Bond Yield                         | *(MOF Japan Website)*       | *(custom)*                   | `2YS_JAP`              | MOF Japan            |
-| 10Y - 2Y Yield Spread                                | *(calculated)*              | `yield_spread`               | `YS_JAP`               | Calculated           |
-| Inflation, consumer prices (annual %)                | `FPCPITOTLZGJPN`            | `Inflation`                  | `INF_JAP`              | FRED                 |
-| Unemployment Rate (Ages 15 to 64) for Japan          | `LRUN64TTJPA156S`           | `Unemployment_Rate`          | `UNEMP_JAP`            | FRED                 |
-| Real Net Exports of Goods and Services               | `JPNRGDPNGS`                | `Real_Net_Exports`           | `EX_JAP`               | FRED                 |
-| OECD-based Recession Indicators *(DISCONTINUED)*     | `JPNRECDP`                  | `Recession_Indicator`        | `RECESS_JAP`           | FRED                 |
-| Real Gross Domestic Product for Japan                | `JPNRGDPEXP`                | `Real_GDP`                   | `GDP_JAP`              | FRED                 |
-| Real GDP per Capita *(DISCONTINUED)*                 | `JPNRGDPC`                  | `Real_GDP_Per_Capita`        | `GDPC_JAP`             | FRED                 |
-| Exchange Rate: Japanese Yen to USD                   | `DEXJPUS`                   | `YEN_to_USD_Exchange`        | `EXR_JAP`              | FRED                 |
-| Consumer Confidence Index                            | `CSCICP03.JPN.M`            | *(custom - via OECD API)*    | `CCI_JAP`              | OECD                 |
+| Description                                          | Series ID                   | READABLE_NAMES Entry      | Short Code Suggestion | Source               |
+|------------------------------------------------------|------------------------------|---------------------------|-----------------------|----------------------|
+| Economic Policy Uncertainty Index for Japan          | `JPNEPUINDXM`               | `Japan_EPU_Index`         | `EPU_JAP`             | FRED                 |
+| Industrial Production (Excl. Construction) for Japan | `JPNPROINDAISMEI`           | `Industrial_Production`   | `IP_JAP`              | FRED                 |
+| 10-Year Government Bond Yield                        | `INTGSBJPM193N`             | `10Y_Bond_Yield`          | `10YS_JAP`            | FRED                 |
+| 2-Year Government Bond Yield                         | *(MOF Japan Website)*       | *(custom)*                | `2YS_JAP`             | MOF Japan            |
+| 10Y - 2Y Yield Spread                                | *(calculated)*              | `yield_spread`            | `YS_JAP`              | Calculated           |
+| Inflation, consumer prices (annual %)                | `FPCPITOTLZGJPN`            | `Inflation`               | `INF_JAP`             | FRED                 |
+| Unemployment Rate (Ages 15 to 64) for Japan          | `LRUN64TTJPA156S`           | `Unemployment_Rate`       | `UNEMP_JAP`           | FRED                 |
+| Real Net Exports of Goods and Services               | `JPNRGDPNGS`                | `Real_Net_Exports`        | `EX_JAP`              | FRED                 |
+| Real Imports of Goods and Services for Japan         | `JPNRGDPIGS`                | `Real_NET_Imports`        | `IMP_JAP`             | FRED                 |
+| OECD-based Recession Indicators *(DISCONTINUED)*     | `JPNRECDP`                  | `Recession_Indicator`     | `RECESS_JAP`          | FRED                 |
+| Real Gross Domestic Product for Japan                | `JPNRGDPEXP`                | `Real_GDP`                | `GDP_JAP`             | FRED                 |
+| Real GDP per Capita *(DISCONTINUED)*                 | `JPNRGDPC`                  | `Real_GDP_Per_Capita`     | `GDPC_JAP`            | FRED                 |
+| Exchange Rate: Japanese Yen to USD                   | `DEXJPUS`                   | `YEN_to_USD_Exchange`     | `EXR_JAP`             | FRED                 |
+| Consumer Confidence Index                            | `CSCICP03.JPN.M`            | *(custom - via OECD API)* | `CCI_JAP`             | OECD                 |
 
 Link sources:
 - Yield Spread: `INTGSBJPM193N`, 2Y: https://www.mof.go.jp/english/policy/jgbs/reference/interest_rate/index.htm
@@ -118,23 +119,25 @@ Link sources:
 ---
 
 ## Main indicators for Mexico:
-| Description                                                            | Series ID                  | READABLE_NAMES Entry       | Short Code Suggestion | Source     |
-|------------------------------------------------------------------------|----------------------------|----------------------------|-----------------------|------------|
-| World Uncertainty Index for Mexico                                     | `WUIMEX`                   | `Mexico_EPU`               | `EPU_MEX`             | FRED       |
-| Production: Industry: Total Industry Including Construction for Mexico | `MEXPRINTO02IXOBSAM`       | `Industrial_Production`    | `IP_MEX`              | FRED       |
-| Yield Spread (10Y Gov Bonds)                                           | `INTGSBMXM193N`            | `10Y_Bonds_Rate`           | `1OYS_MEX`            | FRED       |
-| Yield Spread (2Y Gov Bonds)                                            | `IRLTST01MXM156N`          | `2Y_Bond_Rate`              | `2YS_MEX`             | FRED       |
-| 10-Year - 2-Year Government Bond Spread                                | *(Custom)*                 | `yield_spread`             | `YS_MEX`              | Calculated |
-| Inflation, consumer prices for Mexico                                  | `FPCPITOTLZGMEX`           | `Inflation`                | `INF_MEX`             | FRED       |
-| Unemployment Rate for Mexico                                           | *(World Bank)*             | *(custom)*                 | `UNEMP_MEX`           | World Bank |
-| Recession Indicator                                                    | `MEXRECD`                  | `recession_indicator`      | `RECESS_MEX`          | FRED       |
-| Real Gross Domestic Product for Mexico                                 | `NGDPRSAXDCMXQ`            | `Real_GDP`                 | `GDP_MEX`             | FRED       |
-| Real GDP per capita                                                    | `NY.GDP.PCAP.CD`           | *(custom)*                 | `GDPC_MEX`            | World Bank |
-| Treasury Bills Rate                                                    | `INTGSTMXM193N`            | *(optional)*               | `TBR_MEX`             | FRED       |
-| Exchange Rate to U.S. Dollar for Mexico                                | `FXRATEMXA618NUPN`         | `Exchange_Rate_USD`        | `EXR_MEX`             | FRED       |
-| Consumer Confidence Index                                              | `CSCICP03.MEX.M`           | *(custom - via OECD API)*  | `CCI_MEX`             | OECD       |
-| Additional Unemployment Rate                                           | `LRHUTTTTMXM156S`          | `Mexico_Unemployment_Rate` | `UNEMP_MEX`           | FRED       |
-| Alternate Goods Exports metric                                         | `XTEXVA01MXM667S`          | `Goods_Exports`            | `EX_MEX`              | FRED       |
+| Description                                                            | Series ID           | READABLE_NAMES Entry       | Short Code Suggestion | Source     |
+|------------------------------------------------------------------------|---------------------|----------------------------|-----------------------|------------|
+| World Uncertainty Index for Mexico                                     | `WUIMEX`            | `Mexico_EPU`               | `EPU_MEX`             | FRED       |
+| Production: Industry: Total Industry Including Construction for Mexico | `MEXPRINTO02IXOBSAM` | `Industrial_Production`    | `IP_MEX`              | FRED       |
+| Yield Spread (10Y Gov Bonds)                                           | `INTGSBMXM193N`     | `10Y_Bonds_Rate`           | `1OYS_MEX`            | FRED       |
+| Yield Spread (2Y Gov Bonds)                                            | `IRLTST01MXM156N`   | `2Y_Bond_Rate`             | `2YS_MEX`             | FRED       |
+| 10-Year - 2-Year Government Bond Spread                                | *(Custom)*          | `yield_spread`             | `YS_MEX`              | Calculated |
+| Inflation, consumer prices for Mexico                                  | `FPCPITOTLZGMEX`    | `Inflation`                | `INF_MEX`             | FRED       |
+| Unemployment Rate for Mexico                                           | *(World Bank)*      | *(custom)*                 | `UNEMP_MEX`           | World Bank |
+| Recession Indicator                                                    | `MEXRECD`           | `recession_indicator`      | `RECESS_MEX`          | FRED       |
+| Real Gross Domestic Product for Mexico                                 | `NGDPRSAXDCMXQ`     | `Real_GDP`                 | `GDP_MEX`             | FRED       |
+| Real GDP per capita                                                    | `NY.GDP.PCAP.CD`    | *(custom)*                 | `GDPC_MEX`            | World Bank |
+| Real Exports of Goods and Services for Mexico                          | `NXRSAXDCMXQ`    | `Real_Exports`             | `EX_MEX`              | FRED       |
+| Real Imports of Goods and Services for Mexico                          | `NMRSAXDCMXQ`       | `Real_Imports`             | `IMP_MEX`             | FRED       |
+| Treasury Bills Rate                                                    | `INTGSTMXM193N`     | *(optional)*               | `TBR_MEX`             | FRED       |
+| Exchange Rate to U.S. Dollar for Mexico                                | `FXRATEMXA618NUPN`  | `Exchange_Rate_USD`        | `EXR_MEX`             | FRED       |
+| Consumer Confidence Index                                              | `CSCICP03.MEX.M`    | *(custom - via OECD API)*  | `CCI_MEX`             | OECD       |
+| Additional Unemployment Rate                                           | `LRHUTTTTMXM156S`   | `Mexico_Unemployment_Rate` | `UNEMP_MEX`           | FRED       |
+| Alternate Goods Exports metric                                         | `XTEXVA01MXM667S`   | `Goods_Exports`            | `EX_MEX`              | FRED       |
 
 Source links:
 - Unemployment Rate for Mexico: `https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?locations=MX&name_desc=false`

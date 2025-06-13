@@ -21,6 +21,8 @@ FRED_SERIES = {
     "LRHUTTTTMXM156S": {"units": "lin", "frequency": "m"},
     "NYGDPPCAPKDMEX": {"units": "lin", "frequency": "a"},
     "XTEXVA01MXM667S": {"units": "lin", "frequency": "m"},
+    "NMRSAXDCMXQ":{"units": "lin", "frequency": "q"},
+    "NXRSAXDCMXQ":{"units": "lin", "frequency": "q"},
     "MEXRECD": {"units": "lin", "frequency": "d"}, # Convert to monthly
 }
 
@@ -33,6 +35,8 @@ READABLE_NAMES = {
     "INTGSBMXM193N": "1OYS_MEX",
     "IRLTST01MXM156N": "2YS_MEX",
     "FXRATEMXA618NUPN": "EXR_MEX",
+    "NMRSAXDCMXQ": "IM_MEX",
+    "NXRSAXDCMXQ":"EX_MEX",
     "LRHUTTTTMXM156S": "UNEMP_MEX",
     "NYGDPPCAPKDMEX": "GDPC_MEX",
     "XTEXVA01MXM667S": "EX_MEX",
@@ -62,7 +66,14 @@ def fetch_fred_series(series_id, options):
         df = pd.DataFrame(data["observations"])
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
-        return df[["date", series_id]]
+        df = df[["date", series_id]]
+
+        # Convert to monthly if daily
+        if options["frequency"] == "d":
+            df.set_index("date", inplace=True)
+            df = df.resample("ME").max().reset_index()
+
+        return df
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None

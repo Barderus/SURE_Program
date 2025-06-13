@@ -19,6 +19,7 @@ FRED_SERIES = {
     "JPNRGDPEXP": {"units": "lin", "frequency": "a"},
     "JPNRGDPC": {"units": "lin", "frequency": "a"},
     "INTGSBJPM193N": {"units": "lin", "frequency": "m"},
+    "JPNRGDPIGS": {"units": "lin", "frequency": "q"},
     "DEXJPUS": {"units": "lin", "frequency": "d"},
 }
 
@@ -28,6 +29,7 @@ READABLE_NAMES = {
     "FPCPITOTLZGJPN": "INF_JAP",
     "LRUN64TTJPA156S": "UNEMP_JAP",
     "JPNRGDPNGS": "EX_JAP",
+    "JPNRGDPIGS": "IM_JAP",
     "JPNRECDP": "RECESS_JAP",
     "JPNRGDPEXP": "GDP_JAP",
     "JPNRGDPC": "GDPC_JAP",
