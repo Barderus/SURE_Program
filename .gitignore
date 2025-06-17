@@ -12,4 +12,6 @@ __pycache__/
 # Ignore data files
 *.xlsx
 
-old/
+Old/
+
+Practice-NOGIT/
