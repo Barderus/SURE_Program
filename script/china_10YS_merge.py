@@ -19,7 +19,7 @@ def load_all_china_10y(directory):
 def main():
     df = load_all_china_10y("../data/China-10YS")
 
-    output_path = "../data/raw/10YS_CHI.csv"
+    output_path = "../data/raw/spread/China-10YS.csv"
     df.to_csv(output_path, index=False)
     print(f"\nFile saved on {output_path}")
 
