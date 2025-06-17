@@ -89,10 +89,7 @@ def main():
     logging.info("Starting yield data collection process.")
 
     data_sources = [
-        {"function": fetch_fred, "params": {"label": "US_10Y", "series_id": "DGS10"}},
-        {"function": fetch_fred, "params": {"label": "US_2Y", "series_id": "DGS2"}},
         {"function": fetch_fred, "params": {"label": "Canada_10Y", "series_id": "IRLTLT01CAM156N"}},
-        {"function": fetch_fred, "params": {"label": "Germany_10Y", "series_id": "IRLTLT01DEM156N"}},
         {"function": fetch_fred, "params": {"label": "Japan_10Y", "series_id": "IRLTLT01JPM156N"}},
         {"function": fetch_fred, "params": {"label": "Mexico_10Y", "series_id": "IRLTLT01MXM156N"}},
         {"function": fetch_te_http, "params": {"label": "Mexico_2Y", "symbol": "GMXN2YR"}},
@@ -123,7 +120,6 @@ def main():
     spread_files = {
         'China_2Y': os.path.join(spread_dir, 'China-2Y.csv'),
         'Japan_2Y': os.path.join(spread_dir, 'Japan-2Y.csv'),
-        'Germany_2Y': os.path.join(spread_dir, 'Germany-2y.csv')
     }
 
     for label, path in spread_files.items():
@@ -144,7 +140,7 @@ def main():
     df_all = df_all.ffill()
 
     # --- Output ---
-    output_path = "../data/yield_data_full.csv"
+    output_path = "../data/raw/spread/yield_data_full.csv"
     df_all.to_csv(output_path)
     logging.info(f"Data saved to {output_path}")
 
