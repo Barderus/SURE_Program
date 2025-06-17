@@ -13,7 +13,6 @@
 | Recession Indicators *(DISCONTINUED)*                   | `USARECDM`                | `Recession_Indicator`     | `RECESS_USA`          | FRED                |
 | Real Gross Domestic Product                             | `GDPC1`                   | `Real_GDP`                | `GDP_USA`             | FRED                |
 | Real GDP per capita                                     | `A939RX0Q048SBEA`         | `Real_GDP_Per_Capita`     | `GDPC_USA`            | FRED                |
-| Federal Funds Effective Rate                            | `FEDFUNDS`                | `Federal_Funds_Rate`      | `FFR_USA`             | FRED                |
 | Consumer Confidence Index                               | `CSCICP03.USA.M`          | *(custom - via OECD API)* | `CCI_USA`             | OECD                |
 
 Link sources:
@@ -31,8 +30,8 @@ Link sources:
 | 10Y - 2Y Yield Spread                                | *(calculated)*              | `yield_spread`            | `YS_JAP`              | Calculated           |
 | Inflation, consumer prices (annual %)                | `FPCPITOTLZGJPN`            | `Inflation`               | `INF_JAP`             | FRED                 |
 | Unemployment Rate (Ages 15 to 64) for Japan          | `LRUN64TTJPA156S`           | `Unemployment_Rate`       | `UNEMP_JAP`           | FRED                 |
-| Real Net Exports of Goods and Services               | `JPNRGDPNGS`                | `Real_Net_Exports`        | `EX_JAP`              | FRED                 |
-| Real Imports of Goods and Services for Japan         | `JPNRGDPIGS`                | `Real_NET_Imports`        | `IMP_JAP`             | FRED                 |
+| Real Exports of Goods and Services                   | `JPNRGDPEGS`                | `Real_Exports`            | `EX_JAP`              | FRED                 |
+| Real Imports of Goods and Services for Japan         | `JPNRGDPIGS`                | `Real_Imports `           | `IMP_JAP`             | FRED                 |
 | OECD-based Recession Indicators *(DISCONTINUED)*     | `JPNRECDP`                  | `Recession_Indicator`     | `RECESS_JAP`          | FRED                 |
 | Real Gross Domestic Product for Japan                | `JPNRGDPEXP`                | `Real_GDP`                | `GDP_JAP`             | FRED                 |
 | Real GDP per Capita *(DISCONTINUED)*                 | `JPNRGDPC`                  | `Real_GDP_Per_Capita`     | `GDPC_JAP`            | FRED                 |
@@ -45,26 +44,26 @@ Link sources:
 ---
 
 ## Main indicators for the Germany:
-| Description                                            | Series ID        | READABLE_NAMES Entry      | Short Code Suggestion | Source              |
-|--------------------------------------------------------|------------------|---------------------------|-----------------------|---------------------|
-| Economic Policy Uncertainty Index for Germany          | `DEEPUINDXM`     | `Germany_EPU_Index`       | `EPU_GER`             | FRED                |
-| Index of Industrial Production for Germany             | `A018ADDEA338NNBR` | `Industrial_Production`   | `IP_GER`              | FRED                |
-| 10-Year Yield Spread                                   | `INTGSBDEM193N`  | `10Y_Bond_Yield`          | `10YS_GER`            | FRED                |
-| 2-Year Government Bond Yield                           | *(ECB API)*      | 2Y_Yield_Spread           | `2YS_GER`             | ECB                 |
-| 10-Year - 2-Year Yield Spread                          | *custom*         | Yield_Spread              | `YS_GER`              | ECB                 |
-| Inflation, consumer prices for Germany                 | `FPCPITOTLZGDEU` | `Inflation`               | `INF_GER`             | FRED                |
-| Unemployment to Population Rate: All Ages: All Persons | `LRUPTTTTDEQ156S` | `Unemployment_Rate`       | `UNEMP_GER`           | FRED                |
-| Imports of Goods and Services in Germany               | `DEUIMPORTQDSNAQ` | `Real_Imports`            | `IM_GER`              | FRED                |
-| Exports of Goods and Services in Germany               | `DEUEXPORTQDSNAQ` | `Real_Exports`            | `EX_GER`              | FRED                |
-| OECD-based Recession Indicator *(DISCONTINUED)*        | `DEURECD`        | `Recession_Indicator`     | `RECESS_GER`          | FRED                |
+| Description                                            | Series ID          | READABLE_NAMES Entry      | Short Code Suggestion | Source              |
+|--------------------------------------------------------|--------------------|---------------------------|-----------------------|---------------------|
+| Economic Policy Uncertainty Index for Germany          | `DEEPUINDXM`       | `Germany_EPU_Index`       | `EPU_GER`             | FRED                |
+| Index of Industrial Production for Germany             | `DEUPROINDMISMEI` | `Industrial_Production`   | `IP_GER`              | FRED                |
+| 10-Year Yield Spread                                   | `INTGSBDEM193N`    | `10Y_Bond_Yield`          | `10YS_GER`            | FRED                |
+| 2-Year Government Bond Yield                           | *(ECB API)*        | `2Y_Yield_Spread`           | `2YS_GER`             | ECB                 |
+| 10-Year - 2-Year Yield Spread                          | *custom*           | `Yield_Spread`              | `YS_GER`              | ECB                 |
+| Inflation, consumer prices for Germany                 | `FPCPITOTLZGDEU`   | `Inflation`               | `INF_GER`             | FRED                |
+| Unemployment to Population Rate: All Ages: All Persons | `LRUPTTTTDEQ156S`  | `Unemployment_Rate`       | `UNEMP_GER`           | FRED                |
+| Real Imports of Goods and Services in Germany          | `NMRSAXDCDEQ`      | `Real_Imports`            | `IM_GER`              | FRED                |
+| Exports of Goods and Services in Germany               | `DEUEXPORTQDSNAQ`  | `Real_Exports`            | `EX_GER`              | FRED                |
+| OECD-based Recession Indicator *(DISCONTINUED)*        | `DEURECD`          | `Recession_Indicator`     | `RECESS_GER`          | FRED                |
 | Real Gross Domestic Product for Germany                | `CLVMNACSCAB1GQDE` | `Real_GDP`                | `GDP_GER`             | FRED                |
-| Real GDP per capita                                    | `DEURGDPC`       | `Real_GDP_Per_Capita`     | `GDPC_GER`            | FRED                |
-| Exchange Rate (Local currency per 1 USD)               | `PA.NUS.FCRF`    | *(custom)*                | `EXR_GER`             | World Bank          |
+| Real GDP per capita                                    | `DEURGDPC`         | `Real_GDP_Per_Capita`     | `GDPC_GER`            | FRED                |
+| Exchange Rate (Local currency per 1 USD)               | `PA.NUS.FCRF`      | *(custom)*                | `EXR_GER`             | World Bank          |
 | Exchange Rate (market + estimated)                     | `XRNCUSDEA618NRUG` | `Market_Exchange_Rate`    | `EXR_GER`             | FRED                |
-| Consumer Confidence Index                              | `CSCICP03.DEU.M` | *(custom - via OECD API)* | `CCI_GER`             | OECD                |
+| Consumer Confidence Index                              | `CSCICP03.DEU.M`   | *(custom - via OECD API)* | `CCI_GER`             | OECD                |
 
 Link sources:
-- Yield Spread: 10Y: `INTGSBDEM193N`- 2Y: https://data.ecb.europa.eu/ API
+- Yield Spread: 10Y: `INTGSBDEM193N`- 2Y: https://data.ecb.europa.eu/ API or https://data.ecb.europa.eu/data/datasets/YC/YC.B.U2.EUR.4F.G_N_A.SV_C_YM.SRS_10Y_2Y
 - Exchange Rate (Local currency per 1 USD): `https://data.worldbank.org/indicator/PA.NUS.FCRF?locations=de`
 - Consumer Confidence Index: `https://db.nomics.world/OECD/MEI_CLI/CSCICP03.DEU.M?tab=chart`
 ---
@@ -89,32 +88,34 @@ Link sources:
 | Consumer Confidence Index                                             | `CSCICP03.CHN.M`   | *(custom - via OECD API)*  | `CCI_CHI`             | OECD          |
 
 Link sources:
+- Real Imports for China is Annually
 - 2Y Bond Spread: https://www.investing.com/rates-bonds/china-2-year-bond-yield-historical-data
 - Yield Spread: 10Y:`INTDSRCNM193N`- 2Y: `https://yield.chinabond.com.cn/cbweb-pbc-web/pbc/showHistory?locale=en_US`
 - Unemployment Rate for China: `https://data.worldbank.org/indicator/SL.UEM.TOTL.ZS?locations=CN`
 - Real GDP per capita: `https://data.worldbank.org/indicator/NY.GDP.PCAP.CD?locations=CN`
 - Consumer Confidence Index: https://db.nomics.world/OECD/MEI_CLI/CSCICP03.CHN.M?tab=chart
+- New GDP: https://data.worldbank.org/indicator/NY.GDP.MKTP.KD?locations=CN
 ---
 
 ##  Main Indicators for Canada
-| Description                                                            | Series ID           | READABLE_NAMES Entry      | Short Code Suggestion | Source           |
-|------------------------------------------------------------------------|---------------------|---------------------------|------------------------|------------------|
-| Economic Policy Uncertainty Index for Canada                           | `CANEPUINDXM`       | `Canada_EPU_Index`        | `EPU_CAN`              | FRED             |
-| Production: Industry: Total Industry Excluding Construction for Canada | `CANPRINTO01MLSAM`  | `Industrial_Production`   | `IP_CAN`               | FRED             |
-| 10-Year Government Bond Yield                                          | `IRLTLT01CAQ156N`   | `10Y_Bond_Yield`          | `10YS_CAN`             | FRED             |
-| 2-Year Government Bond Yield                                           | *(Bank of Canada)*  | `2Y_Bond_Yield`           | `2YS_CAN`              | Bank of Canada   |
-| 10-Year - 2-Year Government Bond Spread                                | *(Custom)*          | `yield_spread`            | `YS_CAN`               | Calculated       |
-| Inflation, consumer prices for Canada                                  | `FPCPITOTLZGCAN`    | `CPI_Inflation`           | `INF_CAN`              | FRED             |
-| Unemployment Rate for Canada                                           | *(World Bank)*      | `Unemployment_rate`       | `UNEMP_CAN`            | World Bank       |
-| Real Exports of Goods and Services for Canada                          | `NXRSAXDCCAQ`       | `Real_Exports`            | `EX_CAN`               | FRED             |
-| Imports of Goods and Services in Canada                                | `CANIMPORTQDSNAQ`   | `Real_Imports`            | `IM_CAN`               | FRED             |
-| OECD-based Recession Indicators for Canada *(DISCONTINUED)*            | `CANRECDM`          | `Recession_Indicator`     | `RECESS_CAN`           | FRED             |
-| Real Gross Domestic Product for Canada                                 | `NGDPRSAXDCCAQ`     | `Real_GDP`                | `GDP_CAN`              | FRED             |
-| Real GDP per capita *(DISCONTINUED)*                                   | `CANRGDPC`          | `Real_GDP_Per_Capita`     | `GDPC_CAN`             | FRED             |
-| Interest Rates: Government Bonds (10-Year)                             | `INTGSBCAM193N`     | `Gov_Bonds`               | `GBR_CAN`              | FRED             |
-| Interest Rates: Central Bank Rates (Overnight)                         | `IRSTCB01CAM156N`   | `Central_Bank_Rate`       | `CBR_CAN`              | FRED             |
-| Canadian Dollar to U.S. Dollar Spot Exchange Rate                      | `DEXCAUS`           | `CAD_to_USD_Exchange`     | `EXR_CAN`              | FRED             |
-| Consumer Confidence Index *(DISCONTINUED)*                             | `CSCICP03CAM665S`   | `CCI`                     | `CCI_CAN`              | FRED             |
+| Description                                                            | Series ID          | READABLE_NAMES Entry      | Short Code Suggestion | Source           |
+|------------------------------------------------------------------------|--------------------|---------------------------|------------------------|------------------|
+| Economic Policy Uncertainty Index for Canada                           | `CANEPUINDXM`      | `Canada_EPU_Index`        | `EPU_CAN`              | FRED             |
+| Production: Industry: Total Industry Excluding Construction for Canada | `CANPROINDMISMEI` | `Industrial_Production`   | `IP_CAN`               | FRED             |
+| 10-Year Government Bond Yield                                          | `IRLTLT01CAQ156N`  | `10Y_Bond_Yield`          | `10YS_CAN`             | FRED             |
+| 2-Year Government Bond Yield                                           | *(Bank of Canada)* | `2Y_Bond_Yield`           | `2YS_CAN`              | Bank of Canada   |
+| 10-Year - 2-Year Government Bond Spread                                | *(Custom)*         | `yield_spread`            | `YS_CAN`               | Calculated       |
+| Inflation, consumer prices for Canada                                  | `FPCPITOTLZGCAN`   | `CPI_Inflation`           | `INF_CAN`              | FRED             |
+| Unemployment Rate for Canada                                           | *(World Bank)*     | `Unemployment_rate`       | `UNEMP_CAN`            | World Bank       |
+| Real Exports of Goods and Services for Canada                          | `NXRSAXDCCAQ`      | `Real_Exports`            | `EX_CAN`               | FRED             |
+| Real Imports of Goods and Services for Canada                          | `NMRSAXDCCAQ`      | `Real_Imports`            | `IM_CAN`               | FRED             |
+| OECD-based Recession Indicators for Canada *(DISCONTINUED)*            | `CANRECDM`         | `Recession_Indicator`     | `RECESS_CAN`           | FRED             |
+| Real Gross Domestic Product for Canada                                 | `NGDPRSAXDCCAQ`    | `Real_GDP`                | `GDP_CAN`              | FRED             |
+| Real GDP per capita *(DISCONTINUED)*                                   | `CANRGDPC`         | `Real_GDP_Per_Capita`     | `GDPC_CAN`             | FRED             |
+| Interest Rates: Government Bonds (10-Year)                             | `INTGSBCAM193N`    | `Gov_Bonds`               | `GBR_CAN`              | FRED             |
+| Interest Rates: Central Bank Rates (Overnight)                         | `IRSTCB01CAM156N`  | `Central_Bank_Rate`       | `CBR_CAN`              | FRED             |
+| Canadian Dollar to U.S. Dollar Spot Exchange Rate                      | `DEXCAUS`          | `CAD_to_USD_Exchange`     | `EXR_CAN`              | FRED             |
+| Consumer Confidence Index *(DISCONTINUED)*                             | `CSCICP03CAM665S`  | `CCI`                     | `CCI_CAN`              | FRED             |
 
 ---
 
@@ -133,7 +134,6 @@ Link sources:
 | Real GDP per capita                                                    | `NY.GDP.PCAP.CD`    | *(custom)*                 | `GDPC_MEX`            | World Bank |
 | Real Exports of Goods and Services for Mexico                          | `NXRSAXDCMXQ`    | `Real_Exports`             | `EX_MEX`              | FRED       |
 | Real Imports of Goods and Services for Mexico                          | `NMRSAXDCMXQ`       | `Real_Imports`             | `IMP_MEX`             | FRED       |
-| Treasury Bills Rate                                                    | `INTGSTMXM193N`     | *(optional)*               | `TBR_MEX`             | FRED       |
 | Exchange Rate to U.S. Dollar for Mexico                                | `FXRATEMXA618NUPN`  | `Exchange_Rate_USD`        | `EXR_MEX`             | FRED       |
 | Consumer Confidence Index                                              | `CSCICP03.MEX.M`    | *(custom - via OECD API)*  | `CCI_MEX`             | OECD       |
 | Additional Unemployment Rate                                           | `LRHUTTTTMXM156S`   | `Mexico_Unemployment_Rate` | `UNEMP_MEX`           | FRED       |
