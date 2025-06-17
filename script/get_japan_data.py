@@ -20,7 +20,7 @@ FRED_SERIES = {
     "JPNRGDPC": {"units": "lin", "frequency": "a"},
     "INTGSBJPM193N": {"units": "lin", "frequency": "m"},
     "JPNRGDPIGS": {"units": "lin", "frequency": "q"},
-    "DEXJPUS": {"units": "lin", "frequency": "d"},
+    "DEXJPUS": {"units": "lin", "frequency": "d"}, # Convert  to monthly
 }
 
 READABLE_NAMES = {
@@ -54,10 +54,19 @@ def fetch_fred_series(series_id, options):
         df = pd.DataFrame(data["observations"])
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
-        return df[["date", series_id]]
+
+        # Convert daily data to monthly
+        if options["frequency"] == "d":
+            df = df.resample("MS", on="date").mean(numeric_only=True).reset_index()
+
+        # Always keep only the required columns
+        df = df[["date", series_id]]
+
+        return df
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
+
 
 def collect_japan_data():
     combined_df = None
