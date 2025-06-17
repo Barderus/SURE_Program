@@ -18,10 +18,9 @@ FRED_SERIES = {
     "NXRXDCCNA": {"units": "lin", "frequency": "a"},
     "CHNXTNTVA01STSAQ": {"units": "lin", "frequency": "q"},
     "CHNRECDM": {"units": "lin", "frequency": "m"},
-    "NGDPRXDCCNA": {"units": "lin", "frequency": "a"},
+    #"NGDPRXDCCNA": {"units": "lin", "frequency": "a"},
     "INTDSRCNM193N": {"units": "lin", "frequency": "m"},
     "CCUSSP02CNM650N": {"units": "lin", "frequency": "m"},
-
 }
 
 # Human-readable column names
@@ -33,7 +32,7 @@ READABLE_NAMES = {
     "NXRXDCCNA": "EX_CHI",
     "CHNXTNTVA01STSAQ": "TB_CHI",
     "CHNRECDM": "RECESS_CHI",
-    "NGDPRXDCCNA": "GDP_CHI",
+    #"NGDPRXDCCNA": "GDP_CHI",
     "INTDSRCNM193N": "10YS_CHI",
     "CCUSSP02CNM650N": "EXR_CHI",
 }
@@ -41,7 +40,8 @@ READABLE_NAMES = {
 # World Bank series configuration
 WORLD_BANK_SERIES = {
     "SL.UEM.TOTL.ZS": "UNEMP_CHI",
-    "NY.GDP.PCAP.CD": "GDPC_CHI"
+    "NY.GDP.PCAP.CD": "GDPC_CHI",
+    "NY.GDP.MKTP.KD": "GDP_CHI"
 }
 
 # --- Functions ---
@@ -78,7 +78,15 @@ def fetch_worldbank_series(indicator, column_name):
             {"year": item["date"], column_name: item["value"]}
             for item in data if item["value"] is not None
         ])
-        df["date"] = pd.to_datetime(df["year"], format="%Y").dt.to_period("Y").dt.to_timestamp()
+
+        # Scale GDP to billions if needed
+        if indicator == "NY.GDP.MKTP.KD":
+            df[column_name] = df[column_name] / 1e9  # Convert to billions
+
+        df["date"] = pd.to_datetime(df["year"], format="%Y")
+        df["date"] = df["date"].dt.to_period("Y")
+        df["date"] = df["date"].dt.to_timestamp()
+
         return df.drop(columns="year")
     except Exception as e:
         print(f"[World Bank] Error fetching {indicator}: {e}")
@@ -92,7 +100,10 @@ def main():
     for series_id, options in FRED_SERIES.items():
         df = fetch_fred_series(series_id, options)
         if df is not None:
-            combined_df = df if combined_df is None else pd.merge(combined_df, df, on="date", how="outer")
+            if combined_df is None:
+                combined_df = df
+            else:
+                combined_df = pd.merge(combined_df, df, on="date", how="outer")
 
     if combined_df is not None:
         combined_df.rename(columns=READABLE_NAMES, inplace=True)
