@@ -45,24 +45,32 @@ def fetch_canada_2y():
 
 # ---------- Germany 2Y from ECB (local CSV) ----------
 def fetch_germany_2y():
-    file_path = "../data/raw/Germany-2Y.csv"
+    file_path = "../data/raw/spread/Germany-2Y.csv"
     df = pd.read_csv(file_path)
     df = df[df["price"] != "."]
     df["date"] = pd.to_datetime(df["date"])
     df["price"] = pd.to_numeric(df["price"])
     return df.rename(columns={"price": "2YS_GER"})[["date", "2YS_GER"]]
 
+def fetch_germany_YS():
+    file_path = "../data/raw/spread/GER_YS.csv"
+    df = pd.read_csv(file_path)
+    df = df[df["price"] != "."]
+    df["date"] = pd.to_datetime(df["date"])
+    df["price"] = pd.to_numeric(df["price"])
+    return df.rename(columns={"price": "YS_GER"})[["date", "YS_GER"]]
+
 # ---------- China from local CSV ----------
 def fetch_china_yield():
-    df_2y = pd.read_csv("../data/raw/China-2Y.csv", parse_dates=["date"])
-    df_10y = pd.read_csv("../data/raw/10YS_CHI.csv", parse_dates=["date"])
+    df_2y = pd.read_csv("../data/raw/spread/China-2Y.csv", parse_dates=["date"])
+    df_10y = pd.read_csv("../data/raw/spread/China-10YS.csv", parse_dates=["date"])
     df_2y = df_2y[["date", "price"]].rename(columns={"price": "2YS_CHI"})
     df_10y = df_10y[["date", "price"]].rename(columns={"price": "10YS_CHI"})
     return pd.merge(df_2y, df_10y, on="date", how="outer").sort_values("date")
 
 # ---------- Japan from local CSV ----------
 def fetch_japan_yield():
-    df = pd.read_csv("../data/raw/Japan-2Y.csv")
+    df = pd.read_csv("../data/raw/spread/Japan-2Y.csv")
     df = df[df["price"] != "."]
     df["date"] = pd.to_datetime(df["date"])
     df["price"] = pd.to_numeric(df["price"])
@@ -83,26 +91,23 @@ save_country_csv("CAN", can_df)
 # Germany
 ger_10y = fetch_fred("10YS_GER", fred_series["10YS_GER"])
 ger_2y = fetch_germany_2y()
+ger_ys = fetch_germany_YS()
 
 # Ensure 'date' column is monthly
 ger_10y["date"] = pd.to_datetime(ger_10y["date"]).dt.to_period("M").dt.to_timestamp()
 ger_2y["date"] = pd.to_datetime(ger_2y["date"]).dt.to_period("M").dt.to_timestamp()
+ger_ys["date"] = pd.to_datetime(ger_ys["date"]).dt.to_period("M").dt.to_timestamp()
 
 # Rename for consistency
 ger_10y = ger_10y.rename(columns={"value": "10YS_GER"})
 ger_2y = ger_2y.rename(columns={"value": "2YS_GER"})
+ger_ys = ger_ys.rename(columns={"value":"YS_GER"})
 
 # Merge on monthly date
 ger_df = pd.merge(ger_10y, ger_2y, on="date", how="outer").sort_values("date")
 
 # Save to CSV
-save_country_csv("GER", ger_df)
-
-
-
-
-
-
+save_country_csv("GER", ger_ys)
 
 # Mexico
 mex_10y = fetch_fred("10YS_MEX", fred_series["10YS_MEX"])
