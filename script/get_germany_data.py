@@ -13,10 +13,10 @@ WB_EXCHANGE_INDICATOR = "PA.NUS.FCRF"  # Official exchange rate (LCU per USD)
 
 FRED_SERIES = {
     "DEEPUINDXM": {"units": "lin", "frequency": "m"},
-    "A018ADDEA338NNBR": {"units": "lin", "frequency": "a"},
+    "DEUPROINDMISMEI": {"units": "lin", "frequency": "a"},
     "FPCPITOTLZGDEU": {"units": "lin", "frequency": "a"},
     "LRUPTTTTDEQ156S": {"units": "lin", "frequency": "q"},
-    "DEUIMPORTQDSNAQ": {"units": "lin", "frequency": "q"},
+    "NMRSAXDCDEQ": {"units": "lin", "frequency": "q"},
     "DEUEXPORTQDSNAQ": {"units": "lin", "frequency": "q"},
     "DEURECD": {"units": "lin", "frequency": "m"},
     "CLVMNACSCAB1GQDE": {"units": "lin", "frequency": "q"},
@@ -26,13 +26,13 @@ FRED_SERIES = {
 
 READABLE_NAMES = {
     "DEEPUINDXM": "EPU_GER",
-    "A018ADDEA338NNBR": "IP_GER",
+    "DEUPROINDMISMEI": "IP_GER",
     "FPCPITOTLZGDEU": "INF_GER",
     "LRUPTTTTDEQ156S": "UNEMP_GER",
-    "DEUIMPORTQDSNAQ": "IM_GER",
+    "NMRSAXDCDEQ": "IM_GER",
     "DEUEXPORTQDSNAQ": "EX_GER",
     "DEURECD": "RECESS_GER",
-    "CLVMNACSCAB1GQDE": "GDP_GER",
+    "CLVMNACSCAB1GQDE": "GDP_GER",      # Unites are in millions, need to transform to billions
     "DEURGDPC": "GDPC_GER",
     "INTGSBDEM193N": "10YS_GER",
 }
@@ -55,6 +55,11 @@ def fetch_fred_series(series_id, options):
         df = pd.DataFrame(data["observations"])
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
+
+        # Convert GDP from millions to billions
+        if series_id == "CLVMNACSCAB1GQDE":
+            df[series_id] = df[series_id] / 1000
+
         return df[["date", series_id]]
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")
