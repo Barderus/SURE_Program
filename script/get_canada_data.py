@@ -13,26 +13,26 @@ WB_CANADA_UNEMPLOYMENT = "SL.UEM.TOTL.ZS"
 
 FRED_SERIES = {
     "CANEPUINDXM": {"units": "lin", "frequency": "m"},
-    "CANPRINTO01MLSAM": {"units": "lin", "frequency": "m"},
+    "CANPROINDMISMEI": {"units": "lin", "frequency": "m"},
     "IRLTLT01CAQ156N": {"units": "lin", "frequency": "q"},
     "FPCPITOTLZGCAN": {"units": "lin", "frequency": "a"},
     "NXRSAXDCCAQ": {"units": "lin", "frequency": "q"},
-    "CANIMPORTQDSNAQ": {"units": "lin", "frequency": "q"},
+    "NMRSAXDCCAQ": {"units": "lin", "frequency": "q"},
     "CANRECDM": {"units": "lin", "frequency": "m"},
     "NGDPRSAXDCCAQ": {"units": "lin", "frequency": "q"},
     "CANRGDPC": {"units": "lin", "frequency": "a"},
     "INTGSBCAM193N": {"units": "lin", "frequency": "m"},
-    "DEXCAUS": {"units": "lin", "frequency": "d"},
+    "DEXCAUS": {"units": "lin", "frequency": "d"}, # Convert to monthly
     "CSCICP03CAM665S": {"units": "lin", "frequency": "m"},
 }
 
 READABLE_NAMES = {
     "CANEPUINDXM": "EPU_CAN",
-    "CANPRINTO01MLSAM": "IP_CAN",
+    "CANPROINDMISMEI": "IP_CAN",
     "IRLTLT01CAQ156N": "10YS_CAN",
     "FPCPITOTLZGCAN": "INF_CAN",
     "NXRSAXDCCAQ": "EX_CAN",
-    "CANIMPORTQDSNAQ": "IM_CAN",
+    "NMRSAXDCCAQ": "IM_CAN",
     "CANRECDM": "RECESS_CAN",
     "NGDPRSAXDCCAQ": "GDP_CAN",
     "CANRGDPC": "GDPC_CAN",
@@ -58,10 +58,18 @@ def fetch_fred_series(series_id, options):
         df = pd.DataFrame(data["observations"])
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
-        return df[["date", series_id]]
+
+        # Convert daily data to monthly
+        if options["frequency"] == "d":
+            df = df.resample("MS", on="date").mean(numeric_only=True).reset_index()
+
+        df = df[["date", series_id]]
+
+        return df
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
+
 
 def fetch_worldbank_unemployment():
     print("Fetching World Bank: Canada Unemployment Rate")
@@ -71,7 +79,7 @@ def fetch_worldbank_unemployment():
         response.raise_for_status()
         data = response.json()[1]
         df = pd.DataFrame([
-            {"year": item["date"], "Unemployment_Rate": item["value"]}
+            {"year": item["date"], "UNEMP_CAN": item["value"]}
             for item in data if item["value"] is not None
         ])
         df["date"] = pd.to_datetime(df["year"], format="%Y").dt.to_period("Y").dt.to_timestamp()
