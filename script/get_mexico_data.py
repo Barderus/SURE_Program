@@ -31,7 +31,7 @@ READABLE_NAMES = {
     "WUIMEX": "EPU_MEX",
     "MEXPRINTO02IXOBSAM": "IP_MEX",
     "FPCPITOTLZGMEX": "INF_MEX",
-    "NGDPRSAXDCMXQ": "GDP_MEX",
+    "NGDPRSAXDCMXQ": "GDP_MEX",     # In Millions, need to convert to Billions
     "INTGSBMXM193N": "1OYS_MEX",
     "IRLTST01MXM156N": "2YS_MEX",
     "FXRATEMXA618NUPN": "EXR_MEX",
@@ -46,7 +46,7 @@ READABLE_NAMES = {
 # --- World Bank Series ---
 WORLD_BANK_SERIES = {
     "SL.UEM.TOTL.ZS": "UNEMP_MEX+",
-    "NY.GDP.PCAP.CD": "GDPC_MEX+"
+    #"NY.GDP.PCAP.CD": "GDPC_MEX+"
 }
 
 # --- Fetch FRED Series ---
@@ -66,14 +66,17 @@ def fetch_fred_series(series_id, options):
         df = pd.DataFrame(data["observations"])
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
-        df = df[["date", series_id]]
 
-        # Convert to monthly if daily
+        # Convert millions to billions for specific GDP series
+        if series_id in ["CLVMNACSCAB1GQDE", "NGDPRSAXDCMXQ"]:
+            df[series_id] = df[series_id] / 1000
+
+        # Convert daily data to monthly
         if options["frequency"] == "d":
-            df.set_index("date", inplace=True)
-            df = df.resample("ME").max().reset_index()
+            df = df.resample("MS", on="date").mean(numeric_only=True).reset_index()
 
-        return df
+        # Always keep only the required columns
+        return df[["date", series_id]]
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
