@@ -3,18 +3,20 @@ import os
 
 # --- Define your selected files
 selected_files = [
-    "../data/raw/canada_combined_fred_data_06-12-2025.csv",
-    "../data/raw/germany_combined_fred_data_06-12-2025.csv",
-    "../data/raw/japan_combined_fred_data_06-13-2025.csv",
-    "../data/raw/us_combined_fred_data_06-13-2025.csv",
-    "../data/raw/mexico_combined_data_06-13-2025.csv",
-    "../data/raw/china_combined_data_06-12-2025.csv",
+    "../data/raw/canada_combined_fred_data_06-16-2025.csv",
+    "../data/raw/germany_combined_fred_data_06-16-2025.csv",
+    "../data/raw/japan_combined_fred_data_06-16-2025.csv",
+    "../data/raw/us_combined_fred_data_06-16-2025.csv",
+    "../data/raw/mexico_combined_data_06-16-2025.csv",
+    "../data/raw/china_combined_data_06-16-2025.csv",
+
     "../data/raw/CCI_OECD.csv",
-    "../data/raw/CAN_yields.csv",
-    "../data/raw/MEX_yields.csv",
-    "../data/raw/JAP_yields.csv",
-    "../data/raw/CHI_yields.csv",
-    "../data/raw/GER_yields.csv"
+
+    "../data/raw/spread/spread_only/CAN_spread.csv",
+    "../data/raw/spread/spread_only/MEX_spread.csv",
+    "../data/raw/spread/spread_only/JAP_spread.csv",
+    "../data/raw/spread/spread_only/CHI_spread.csv",
+    "../data/raw/spread/GER_yields.csv"
 ]
 
 def rename_spread_column(df, file):
