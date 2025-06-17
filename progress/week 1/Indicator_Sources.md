@@ -145,7 +145,6 @@
 | Exchange Rate to U.S. Dollar for Mexico                                | `FXRATEMXA618NUPN`   | `Exchange_Rate_USD`        | `EXR_MEX`             | MXN/USD      | Monthly   | FRED       |
 | Consumer Confidence Index                                              | `CSCICP03.MEX.M`     | *(custom - via OECD API)*  | `CCI_MEX`             | Index        | Monthly   | OECD       |
 | Additional Unemployment Rate                                           | `LRHUTTTTMXM156S`    | `Mexico_Unemployment_Rate` | `UNEMP_MEX`           | %            | Monthly   | FRED       |
-| Alternate Goods Exports metric                                         | `XTEXVA01MXM667S`    | `Goods_Exports`            | `EX_MEX`              | Index        | Monthly   | FRED       |
 
 ### Source links:
 
