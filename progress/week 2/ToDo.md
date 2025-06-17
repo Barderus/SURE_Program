@@ -2,18 +2,18 @@
 
 - [x] Clean variable names
 - [x] Create a table to track all the macroeconomic variables used
-- [ ] Ensure that all data ranges across all countries have the same starting date
+- [x] Ensure that all data ranges across all countries have the same starting date (1995)
 
 ##  Exploratory Data Analysis (EDA)
 
 - [ ] Analyze relationship between the variables, especially with EPU
     - [ ] Scatter plots
-    - [ ] Correlation matrix
-    - [ ] Heatmap
+    - [x] Correlation matrix
+    - [x] Heatmap
 
 - [ ] Look for patterns
     - [ ] Trend analysis
     - [ ] Rate of change 
-    - [ ] Time series analysis
+    - [x] Time series analysis
 
-- [ ] Visualization of macroeconomic variables per country  
+- [x] Visualization of macroeconomic variables per country  
