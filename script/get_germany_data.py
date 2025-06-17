@@ -58,7 +58,7 @@ def fetch_fred_series(series_id, options):
 
         # Convert GDP from millions to billions
         if series_id == "CLVMNACSCAB1GQDE":
-            df[series_id] = df[series_id] / 1000
+            df[series_id] = df[series_id] / 100
 
         return df[["date", series_id]]
     except Exception as e:

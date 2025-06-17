@@ -21,7 +21,7 @@ FRED_SERIES = {
     "CANRECDM": {"units": "lin", "frequency": "m"},
     "NGDPRSAXDCCAQ": {"units": "lin", "frequency": "q"},
     "CANRGDPC": {"units": "lin", "frequency": "a"},
-    "INTGSBCAM193N": {"units": "lin", "frequency": "m"},
+    #"INTGSBCAM193N": {"units": "lin", "frequency": "m"},
     "DEXCAUS": {"units": "lin", "frequency": "d"}, # Convert to monthly
     "CSCICP03CAM665S": {"units": "lin", "frequency": "m"},
 }
@@ -36,7 +36,7 @@ READABLE_NAMES = {
     "CANRECDM": "RECESS_CAN",
     "NGDPRSAXDCCAQ": "GDP_CAN",
     "CANRGDPC": "GDPC_CAN",
-    "INTGSBCAM193N": "GBR_CAN",
+    #"INTGSBCAM193N": "GBR_CAN",
     "DEXCAUS": "EXR_CAN",
     "CSCICP03CAM665S": "CCI_CAN"
 }

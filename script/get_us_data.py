@@ -17,7 +17,6 @@ SERIES_LIST = {
     "UNRATE": {"units": "lin", "frequency": "m"},
     "EXPGSC1": {"units": "lin", "frequency": "q"},
     "IMPGSC1":{"units": "lin", "frequency": "q"},
-    "BOPGSTB": {"units": "lin", "frequency": "q"},
     "USARECDM": {"units": "lin", "frequency": "m"},
     "GDPC1": {"units": "lin", "frequency": "q"},
     "A939RX0Q048SBEA": {"units": "lin", "frequency": "q"},

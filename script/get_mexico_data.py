@@ -20,7 +20,6 @@ FRED_SERIES = {
     "FXRATEMXA618NUPN": {"units": "lin", "frequency": "a"},
     "LRHUTTTTMXM156S": {"units": "lin", "frequency": "m"},
     "NYGDPPCAPKDMEX": {"units": "lin", "frequency": "a"},
-    "XTEXVA01MXM667S": {"units": "lin", "frequency": "m"},
     "NMRSAXDCMXQ":{"units": "lin", "frequency": "q"},
     "NXRSAXDCMXQ":{"units": "lin", "frequency": "q"},
     "MEXRECD": {"units": "lin", "frequency": "d"}, # Convert to monthly
@@ -39,13 +38,12 @@ READABLE_NAMES = {
     "NXRSAXDCMXQ":"EX_MEX",
     "LRHUTTTTMXM156S": "UNEMP_MEX",
     "NYGDPPCAPKDMEX": "GDPC_MEX",
-    "XTEXVA01MXM667S": "EX_MEX",
     "MEXRECD": "RECESS_MEX"
 }
 
 # --- World Bank Series ---
 WORLD_BANK_SERIES = {
-    "SL.UEM.TOTL.ZS": "UNEMP_MEX+",
+    #"SL.UEM.TOTL.ZS": "UNEMP_MEX+",
     #"NY.GDP.PCAP.CD": "GDPC_MEX+"
 }
 
@@ -114,6 +112,7 @@ def collect_mexico_data():
         combined_df = combined_df.sort_values("date")
     return combined_df
 
+"""
 # --- Merge World Bank data ---
 def merge_world_bank_data(df):
     for wb_series, readable_name in WORLD_BANK_SERIES.items():
@@ -121,7 +120,7 @@ def merge_world_bank_data(df):
         if wb_df is not None:
             df = pd.merge(df, wb_df.rename(columns={wb_series: readable_name}), on="date", how="outer")
     return df
-
+"""
 # --- Save ---
 def save_to_csv(df, prefix="mexico_combined_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
@@ -134,7 +133,7 @@ def main():
     print("Starting Mexico data collection...\n")
     df = collect_mexico_data()
     if df is not None:
-        df = merge_world_bank_data(df)
+        #df = merge_world_bank_data(df)
         filename = save_to_csv(df)
         print(df.tail(10))
         print(f"Total rows: {len(df)}")
