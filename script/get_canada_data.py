@@ -10,6 +10,8 @@ load_dotenv()
 API_KEY = os.getenv("FRED_API_KEY")
 FRED_BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
 WB_CANADA_UNEMPLOYMENT = "SL.UEM.TOTL.ZS"
+FILE_PATH = "../data/raw/inflation/Canada_Inflation_Data.csv"
+
 
 FRED_SERIES = {
     "CANEPUINDXM": {"units": "lin", "frequency": "m"},
@@ -24,13 +26,14 @@ FRED_SERIES = {
     #"INTGSBCAM193N": {"units": "lin", "frequency": "m"},
     "DEXCAUS": {"units": "lin", "frequency": "d"}, # Convert to monthly
     "CSCICP03CAM665S": {"units": "lin", "frequency": "m"},
+    "LRUNTTTTCAM156S": {"units":"lin", "frequency":"m"}
 }
 
 READABLE_NAMES = {
     "CANEPUINDXM": "EPU_CAN",
     "CANPROINDMISMEI": "IP_CAN",
     "IRLTLT01CAQ156N": "10YS_CAN",
-    "FPCPITOTLZGCAN": "INF_CAN",
+    "FPCPITOTLZGCAN": "INF_YoY_CAN",
     "NXRSAXDCCAQ": "EX_CAN",
     "NMRSAXDCCAQ": "IM_CAN",
     "CANRECDM": "RECESS_CAN",
@@ -38,7 +41,8 @@ READABLE_NAMES = {
     "CANRGDPC": "GDPC_CAN",
     #"INTGSBCAM193N": "GBR_CAN",
     "DEXCAUS": "EXR_CAN",
-    "CSCICP03CAM665S": "CCI_CAN"
+    "CSCICP03CAM665S": "CCI_CAN",
+    "LRUNTTTTCAM156S": "UNEMP_CAN"
 }
 
 # --- Functions ---
@@ -70,7 +74,7 @@ def fetch_fred_series(series_id, options):
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
 
-
+"""
 def fetch_worldbank_unemployment():
     print("Fetching World Bank: Canada Unemployment Rate")
     url = f"https://api.worldbank.org/v2/country/CA/indicator/{WB_CANADA_UNEMPLOYMENT}?format=json&per_page=1000"
@@ -87,6 +91,7 @@ def fetch_worldbank_unemployment():
     except Exception as e:
         print(f"[World Bank] Error fetching unemployment: {e}")
         return None
+"""
 
 
 def collect_canada_data():
@@ -98,10 +103,27 @@ def collect_canada_data():
         if df is not None:
             combined_df = df if combined_df is None else pd.merge(combined_df, df, on="date", how="outer")
 
-    # Rename columns
     if combined_df is not None:
         combined_df.rename(columns=READABLE_NAMES, inplace=True)
 
+        # Add local inflation file
+        if FILE_PATH and os.path.exists(FILE_PATH):
+            print(f"Reading local inflation file: {FILE_PATH}")
+            inflation_df = pd.read_csv(FILE_PATH, parse_dates=["date"])
+
+            # Rename inflation column to match expected name
+            country_code = "CAN"
+            inflation_col = [col for col in inflation_df.columns if col.lower() != "date"]
+            if inflation_col:
+                inflation_df.rename(columns={inflation_col[0]: f"INF_{country_code}"}, inplace=True)
+
+            combined_df = pd.merge(combined_df, inflation_df, on="date", how="outer")
+
+        combined_df = combined_df.sort_values("date")
+
+    return combined_df
+
+"""
     # World Bank: Unemployment
     wb_df = fetch_worldbank_unemployment()
     if wb_df is not None:
@@ -109,7 +131,9 @@ def collect_canada_data():
 
     if combined_df is not None:
         combined_df = combined_df.sort_values("date")
+
     return combined_df
+"""
 
 def save_to_csv(df, prefix="canada_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
@@ -126,6 +150,7 @@ def main():
         filename = save_to_csv(df)
         print(df.tail(10))
         print(f"Total rows: {len(df)}")
+        print(df.columns)
     else:
         print("\nNo data was collected.")
 

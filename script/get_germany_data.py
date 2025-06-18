@@ -10,6 +10,8 @@ load_dotenv()
 API_KEY = os.getenv("FRED_API_KEY")
 FRED_BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
 WB_EXCHANGE_INDICATOR = "PA.NUS.FCRF"  # Official exchange rate (LCU per USD)
+FILE_PATH = "../data/raw/inflation/Germany_Inflation_Data.csv"
+
 
 FRED_SERIES = {
     "DEEPUINDXM": {"units": "lin", "frequency": "m"},
@@ -27,7 +29,7 @@ FRED_SERIES = {
 READABLE_NAMES = {
     "DEEPUINDXM": "EPU_GER",
     "DEUPROINDMISMEI": "IP_GER",
-    "FPCPITOTLZGDEU": "INF_GER",
+    "FPCPITOTLZGDEU": "INF_YoY_GER",
     "LRUPTTTTDEQ156S": "UNEMP_GER",
     "NMRSAXDCDEQ": "IM_GER",
     "DEUEXPORTQDSNAQ": "EX_GER",
@@ -100,9 +102,24 @@ def collect_germany_data():
     if wb_df is not None:
         combined_df = pd.merge(combined_df, wb_df, on="date", how="outer")
 
+    # Add local inflation file
     if combined_df is not None:
+        if FILE_PATH and os.path.exists(FILE_PATH):
+            print(f"Reading local inflation file: {FILE_PATH}")
+            inflation_df = pd.read_csv(FILE_PATH, parse_dates=["date"])
+
+            # Rename inflation column to match expected name
+            country_code = "GER"
+            inflation_col = [col for col in inflation_df.columns if col.lower() != "date"]
+            if inflation_col:
+                inflation_df.rename(columns={inflation_col[0]: f"INF_{country_code}"}, inplace=True)
+
+            combined_df = pd.merge(combined_df, inflation_df, on="date", how="outer")
+
         combined_df = combined_df.sort_values("date")
+
     return combined_df
+
 
 def save_to_csv(df, prefix="germany_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
@@ -119,6 +136,7 @@ def main():
         filename = save_to_csv(df)
         print(df.tail(10))
         print(f"Total rows: {len(df)}")
+        print(df.columns)
     else:
         print("\nNo data was collected.")
 

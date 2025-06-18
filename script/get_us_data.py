@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv("FRED_API_KEY")
 BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
+FILE_PATH = "../data/raw/inflation/USA_Inflation_Data.csv"
+
 
 SERIES_LIST = {
     "USEPUINDXD": {"units": "lin", "frequency": "m"},
@@ -27,7 +29,7 @@ READABLE_NAMES = {
     "USEPUINDXD": "EPU_USA",
     "INDPRO": "IP_USA",
     "T10Y2Y": "YS_USA",
-    "FPCPITOTLZGUSA": "INF_USA",
+    "FPCPITOTLZGUSA": "INF_YoY_USA",
     "UNRATE": "UNEMP_USA",
     "EXPGSC1": "EX_USA",
     "IMPGSC1": "IM_USA",
@@ -62,15 +64,34 @@ def fetch_fred_series(series_id, options):
 
 def collect_us_data():
     combined_df = None
+
+    # FRED data
     for series_id, options in SERIES_LIST.items():
         df = fetch_fred_series(series_id, options)
         if df is not None:
             combined_df = df if combined_df is None else pd.merge(combined_df, df, on="date", how="outer")
 
+    # Rename and merge inflation
     if combined_df is not None:
         combined_df.rename(columns=READABLE_NAMES, inplace=True)
+
+        # Add local inflation file
+        if FILE_PATH and os.path.exists(FILE_PATH):
+            print(f"Reading local inflation file: {FILE_PATH}")
+            inflation_df = pd.read_csv(FILE_PATH, parse_dates=["date"])
+
+            # Rename inflation column to match expected name
+            country_code = "USA"
+            inflation_col = [col for col in inflation_df.columns if col.lower() != "date"]
+            if inflation_col:
+                inflation_df.rename(columns={inflation_col[0]: f"INF_{country_code}"}, inplace=True)
+
+            combined_df = pd.merge(combined_df, inflation_df, on="date", how="outer")
+
         combined_df = combined_df.sort_values("date")
+
     return combined_df
+
 
 def save_to_csv(df, prefix="us_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
@@ -87,6 +108,7 @@ def main():
         filename = save_to_csv(df)
         print(df.tail(10))
         print(f"Total rows: {len(df)}")
+        print(df.columns)
     else:
         print("\nNo data was collected.")
 
