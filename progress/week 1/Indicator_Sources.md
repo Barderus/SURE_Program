@@ -1,7 +1,7 @@
 ## Main indicators for the US:
 
 | Description                                             | Series ID           | READABLE\_NAMES Entry     | Short Code Suggestion | Unit             | Frequency | Source |
-| ------------------------------------------------------- |---------------------| ------------------------- | --------------------- | ---------------- |-----------|--------|
+|---------------------------------------------------------|---------------------|---------------------------|-----------------------|------------------|-----------|--------|
 | Economic Policy Uncertainty Index for the United States | `USEPUINDXD`        | `US_EPU_Index`            | `EPU_USA`             | Index            | Monthly   | FRED   |
 | Industrial Production: Total Index                      | `INDPRO`            | `Industrial_Production`   | `IP_USA`              | Index (2017=100) | Monthly   | FRED   |
 | 10Y - 2Y Treasury Yield Spread\*\*                      | `T10Y2Y`            | `Yield_Spread`            | `YS_USA`              | %                | Monthly   | FRED   |
@@ -13,9 +13,10 @@
 | Real Gross Domestic Product                             | `GDPC1`             | `Real_GDP`                | `GDP_USA`             | Billions USD     | Quarterly | FRED   |
 | Real GDP per capita                                     | `A939RX0Q048SBEA`   | `Real_GDP_Per_Capita`     | `GDPC_USA`            | USD              | Quarterly | FRED   |
 | Consumer Confidence Index                               | `CSCICP03.USA.M`    | *(custom - via OECD API)* | `CCI_USA`             | Index            | Monthly   | OECD   |
+| Nominal GDP                                             | `NGDPSAXDCUSQ`      | `Nominal_GDP`             | `NGDP_USA`            | USD              | Quarterly | FRED   |
+| Population                                              | `POPTHM`            | `Population_USA`          | `POP_USA`             | Millions         | Monthly   | FRED   |
 
 ### Link sources:
-
 * Consumer Confidence Index: [OECD](https://db.nomics.world/OECD/MEI_CLI/CSCICP03.USA.M?tab=chart)
 
 ---

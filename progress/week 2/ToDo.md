@@ -6,8 +6,8 @@
 
 ##  Exploratory Data Analysis (EDA)
 
-- [ ] Analyze relationship between the variables, especially with EPU
-    - [ ] Scatter plots
+- [x] Analyze relationship between the variables, especially with EPU
+    - [x] Scatter plots
     - [x] Correlation matrix
     - [x] Heatmap
 
