@@ -12,7 +12,7 @@ FILE_PATH = "../data/raw/inflation/USA_Inflation_Data.csv"
 
 
 SERIES_LIST = {
-    "USEPUINDXD": {"units": "lin", "frequency": "m"},
+    #"USEPUINDXD": {"units": "lin", "frequency": "m"},
     "INDPRO": {"units": "lin", "frequency": "m"},
     "T10Y2Y": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGUSA": {"units": "lin", "frequency": "a"},
@@ -26,18 +26,22 @@ SERIES_LIST = {
 }
 
 READABLE_NAMES = {
-    "USEPUINDXD": "EPU_USA",
+    #"USEPUINDXD": "EPU_USA",
     "INDPRO": "IP_USA",
     "T10Y2Y": "YS_USA",
     "FPCPITOTLZGUSA": "INF_YoY_USA",
     "UNRATE": "UNEMP_USA",
-    "EXPGSC1": "EX_USA",
-    "IMPGSC1": "IM_USA",
+    "EXPGSC1": "EX_USA",    # In Billions
+    "IMPGSC1": "IM_USA",    # In Billions
     "USARECDM": "RECESS_USA",
-    "GDPC1": "GDP_USA",
+    "GDPC1": "GDP_USA",     # In billions
     "A939RX0Q048SBEA": "GDPC_USA",
     "UMCSENT": "CCI_USA",
 }
+
+# Series that are in billions and need to be converted to millions
+BILLION_TO_MILLION = {"EXPGSC1", "IMPGSC1"}
+
 
 # --- Functions ---
 def fetch_fred_series(series_id, options):
@@ -57,6 +61,7 @@ def fetch_fred_series(series_id, options):
         df = pd.DataFrame(data["observations"])
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
+
         return df[["date", series_id]]
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")

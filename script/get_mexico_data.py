@@ -12,7 +12,7 @@ FILE_PATH = "../data/raw/inflation/Mexico_Inflation_Data.csv"
 
 # --- FRED Series ---
 FRED_SERIES = {
-    "WUIMEX": {"units": "lin", "frequency": "q"},
+    #"WUIMEX": {"units": "lin", "frequency": "q"},
     "MEXPRINTO02IXOBSAM": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGMEX": {"units": "lin", "frequency": "a"},
     "NGDPRSAXDCMXQ": {"units": "lin", "frequency": "q"},
@@ -28,7 +28,7 @@ FRED_SERIES = {
 
 # --- Readable Names ---
 READABLE_NAMES = {
-    "WUIMEX": "EPU_MEX",
+    #"WUIMEX": "EPU_MEX",
     "MEXPRINTO02IXOBSAM": "IP_MEX",
     "FPCPITOTLZGMEX": "INF_YoY_MEX",
     "NGDPRSAXDCMXQ": "GDP_MEX",     # In Millions, need to convert to Billions
@@ -47,7 +47,7 @@ WORLD_BANK_SERIES = {
     #"SL.UEM.TOTL.ZS": "UNEMP_MEX+",
     #"NY.GDP.PCAP.CD": "GDPC_MEX+"
 }
-
+MILLION_TO_BILLION = {"NGDPRSAXDCMXQ", "NXRSAXDCMXQ", "NMRSAXDCMXQ"}
 # --- Fetch FRED Series ---
 def fetch_fred_series(series_id, options):
     print(f"Fetching FRED: {series_id}")
@@ -66,15 +66,14 @@ def fetch_fred_series(series_id, options):
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
 
-        # Convert millions to billions for specific GDP series
-        if series_id in ["CLVMNACSCAB1GQDE", "NGDPRSAXDCMXQ"]:
-            df[series_id] = df[series_id] / 1000
+        # Convert from billions to millions
+        if series_id in MILLION_TO_BILLION:
+            df[series_id] /= 1_000
 
         # Convert daily data to monthly
         if options["frequency"] == "d":
             df = df.resample("MS", on="date").mean(numeric_only=True).reset_index()
 
-        # Always keep only the required columns
         return df[["date", series_id]]
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")
@@ -133,16 +132,6 @@ def collect_mexico_data():
 
     return combined_df
 
-
-"""
-# --- Merge World Bank data ---
-def merge_world_bank_data(df):
-    for wb_series, readable_name in WORLD_BANK_SERIES.items():
-        wb_df = fetch_world_bank_series(wb_series, "MX")
-        if wb_df is not None:
-            df = pd.merge(df, wb_df.rename(columns={wb_series: readable_name}), on="date", how="outer")
-    return df
-"""
 # --- Save ---
 def save_to_csv(df, prefix="mexico_combined_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")

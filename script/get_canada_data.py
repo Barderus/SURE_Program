@@ -4,6 +4,8 @@ import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
 
+from script.get_mexico_data import MILLION_TO_BILLION
+
 # --- Configuration ---
 
 load_dotenv()
@@ -14,7 +16,7 @@ FILE_PATH = "../data/raw/inflation/Canada_Inflation_Data.csv"
 
 
 FRED_SERIES = {
-    "CANEPUINDXM": {"units": "lin", "frequency": "m"},
+    #"CANEPUINDXM": {"units": "lin", "frequency": "m"},
     "CANPROINDMISMEI": {"units": "lin", "frequency": "m"},
     "IRLTLT01CAQ156N": {"units": "lin", "frequency": "q"},
     "FPCPITOTLZGCAN": {"units": "lin", "frequency": "a"},
@@ -30,7 +32,7 @@ FRED_SERIES = {
 }
 
 READABLE_NAMES = {
-    "CANEPUINDXM": "EPU_CAN",
+    #"CANEPUINDXM": "EPU_CAN",
     "CANPROINDMISMEI": "IP_CAN",
     "IRLTLT01CAQ156N": "10YS_CAN",
     "FPCPITOTLZGCAN": "INF_YoY_CAN",
@@ -45,6 +47,7 @@ READABLE_NAMES = {
     "LRUNTTTTCAM156S": "UNEMP_CAN"
 }
 
+MILLION_TO_BILLION = {"NGDPRSAXDCCAQ", "NXRSAXDCCAQ", "NMRSAXDCCAQ"}
 # --- Functions ---
 def fetch_fred_series(series_id, options):
     print(f"Fetching FRED: {series_id}")
@@ -67,31 +70,16 @@ def fetch_fred_series(series_id, options):
         if options["frequency"] == "d":
             df = df.resample("MS", on="date").mean(numeric_only=True).reset_index()
 
+        # Convert from billions to millions
+        if series_id in MILLION_TO_BILLION:
+            df[series_id] /= 1_000
+
         df = df[["date", series_id]]
 
         return df
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
-
-"""
-def fetch_worldbank_unemployment():
-    print("Fetching World Bank: Canada Unemployment Rate")
-    url = f"https://api.worldbank.org/v2/country/CA/indicator/{WB_CANADA_UNEMPLOYMENT}?format=json&per_page=1000"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        data = response.json()[1]
-        df = pd.DataFrame([
-            {"year": item["date"], "UNEMP_CAN": item["value"]}
-            for item in data if item["value"] is not None
-        ])
-        df["date"] = pd.to_datetime(df["year"], format="%Y").dt.to_period("Y").dt.to_timestamp()
-        return df.drop(columns="year")
-    except Exception as e:
-        print(f"[World Bank] Error fetching unemployment: {e}")
-        return None
-"""
 
 
 def collect_canada_data():
@@ -122,18 +110,6 @@ def collect_canada_data():
         combined_df = combined_df.sort_values("date")
 
     return combined_df
-
-"""
-    # World Bank: Unemployment
-    wb_df = fetch_worldbank_unemployment()
-    if wb_df is not None:
-        combined_df = pd.merge(combined_df, wb_df, on="date", how="outer")
-
-    if combined_df is not None:
-        combined_df = combined_df.sort_values("date")
-
-    return combined_df
-"""
 
 def save_to_csv(df, prefix="canada_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")

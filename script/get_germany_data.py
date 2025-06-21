@@ -14,31 +14,31 @@ FILE_PATH = "../data/raw/inflation/Germany_Inflation_Data.csv"
 
 
 FRED_SERIES = {
-    "DEEPUINDXM": {"units": "lin", "frequency": "m"},
-    "DEUPROINDMISMEI": {"units": "lin", "frequency": "a"},
+    #"DEEPUINDXM": {"units": "lin", "frequency": "m"},
+    "DEUPROINDMISMEI": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGDEU": {"units": "lin", "frequency": "a"},
-    "LRUPTTTTDEQ156S": {"units": "lin", "frequency": "q"},
+    "LRHUTTTTDEM156S": {"units": "lin", "frequency": "m"},
     "NMRSAXDCDEQ": {"units": "lin", "frequency": "q"},
     "DEUEXPORTQDSNAQ": {"units": "lin", "frequency": "q"},
     "DEURECD": {"units": "lin", "frequency": "m"},
-    "CLVMNACSCAB1GQDE": {"units": "lin", "frequency": "q"},
+    "CLVMEURSCAB1GQDE": {"units": "lin", "frequency": "q"},
     "DEURGDPC": {"units": "lin", "frequency": "a"},
     "INTGSBDEM193N": {"units": "lin", "frequency": "m"},
 }
 
 READABLE_NAMES = {
-    "DEEPUINDXM": "EPU_GER",
+    #"DEEPUINDXM": "EPU_GER",
     "DEUPROINDMISMEI": "IP_GER",
     "FPCPITOTLZGDEU": "INF_YoY_GER",
-    "LRUPTTTTDEQ156S": "UNEMP_GER",
+    "LRHUTTTTDEM156S": "UNEMP_GER",
     "NMRSAXDCDEQ": "IM_GER",
     "DEUEXPORTQDSNAQ": "EX_GER",
     "DEURECD": "RECESS_GER",
-    "CLVMNACSCAB1GQDE": "GDP_GER",      # Unites are in millions, need to transform to billions
+    "CLVMEURSCAB1GQDE": "GDP_GER",      # Unites are in millions, need to transform to billions
     "DEURGDPC": "GDPC_GER",
     "INTGSBDEM193N": "10YS_GER",
 }
-
+MILLION_TO_BILLION = {"CLVMEURSCAB1GQDE", "DEUEXPORTQDSNAQ", "NMRSAXDCDEQ"}
 # --- Functions ---
 
 def fetch_fred_series(series_id, options):
@@ -58,9 +58,19 @@ def fetch_fred_series(series_id, options):
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
 
-        # Convert GDP from millions to billions
-        if series_id == "CLVMNACSCAB1GQDE":
-            df[series_id] = df[series_id] / 100
+        # Convert to billions (with special handling for Germany exports)
+        if series_id in MILLION_TO_BILLION:
+            print(f"\n[Transforming Series: {series_id}]")
+            print("Before transformation:")
+            print(df[[series_id]].head())
+
+            if series_id == "DEUEXPORTQDSNAQ":
+                df[series_id] /= 1_000_000_000  # Euros → Billions of Euros
+            else:
+                df[series_id] /= 1_000  # Millions → Billions
+
+            print("After transformation:")
+            print(df[[series_id]].head())
 
         return df[["date", series_id]]
     except Exception as e:

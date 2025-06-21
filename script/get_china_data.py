@@ -11,7 +11,7 @@ BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
 
 # FRED series configuration
 FRED_SERIES = {
-    "CHIEPUINDXM": {"units": "lin", "frequency": "m"},
+    #"CHIEPUINDXM": {"units": "lin", "frequency": "m"},
     "CHNPRINTO01IXPYM": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGCHN": {"units": "lin", "frequency": "a"},
     "NMRXDCCNA": {"units": "lin", "frequency": "a"},
@@ -25,7 +25,7 @@ FRED_SERIES = {
 
 # Human-readable column names
 READABLE_NAMES = {
-    "CHIEPUINDXM": "EPU_CHI",
+    #"CHIEPUINDXM": "EPU_CHI",
     "CHNPRINTO01IXPYM": "IP_CHI",
     "FPCPITOTLZGCHN": "INF_CHI",
     "NMRXDCCNA": "IM_CHI",
@@ -43,7 +43,7 @@ WORLD_BANK_SERIES = {
     "NY.GDP.PCAP.CD": "GDPC_CHI",
     "NY.GDP.MKTP.KD": "GDP_CHI"
 }
-
+MILLION_TO_BILLION = {"NXRXDCCNA", "NMRXDCCNA"}
 # --- Functions ---
 
 def fetch_fred_series(series_id, options):
@@ -62,10 +62,17 @@ def fetch_fred_series(series_id, options):
         df = pd.DataFrame(data["observations"])
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
+
+        # Convert from millions to billions
+        if series_id in MILLION_TO_BILLION:
+            df[series_id] /= 1_000
+
         return df[["date", series_id]]
+
     except Exception as e:
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
+
 
 def fetch_worldbank_series(indicator, column_name):
     print(f"Fetching World Bank series: {indicator}")
@@ -79,18 +86,23 @@ def fetch_worldbank_series(indicator, column_name):
             for item in data if item["value"] is not None
         ])
 
-        # Scale GDP to billions if needed
-        if indicator == "NY.GDP.MKTP.KD":
-            df[column_name] = df[column_name] / 1e9  # Convert to billions
-
+        # Convert to datetime
         df["date"] = pd.to_datetime(df["year"], format="%Y")
-        df["date"] = df["date"].dt.to_period("Y")
-        df["date"] = df["date"].dt.to_timestamp()
+        df["date"] = df["date"].dt.to_period("Y").dt.to_timestamp()
+
+        # Only apply transformation to GDP (World Bank GDP in trillions → billions)
+        if indicator == "NY.GDP.MKTP.KD":
+            print(f"\nBefore transformation:\n{df[[column_name]].head()}")
+            df[column_name] = df[column_name] / 1_000_000_000  # trillions → billions
+            print(f"\nAfter transformation:\n{df[[column_name]].head()}")
+
+
 
         return df.drop(columns="year")
     except Exception as e:
         print(f"[World Bank] Error fetching {indicator}: {e}")
         return None
+
 
 def main():
     print("Starting data collection...\n")
