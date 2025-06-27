@@ -12,37 +12,38 @@ FILE_PATH = "../data/raw/inflation/Japan_Inflation_Data.csv"
 
 
 FRED_SERIES = {
-    #"JPNEPUINDXM": {"units": "lin", "frequency": "m"},
     "JPNPROINDMISMEI": {"units": "lin", "frequency": "a"},
     "FPCPITOTLZGJPN": {"units": "lin", "frequency": "a"},
     "LRUN64TTJPM156S": {"units": "lin", "frequency": "m"},
-    "JPNRGDPEGS": {"units": "lin", "frequency": "a"},
+    "XTEXVA01JPM667S": {"units": "lin", "frequency": "m"},
     "JPNRECDP": {"units": "lin", "frequency": "m"},
     "JPNRGDPEXP": {"units": "lin", "frequency": "q"},
     "JPNRGDPC": {"units": "lin", "frequency": "a"},
     "INTGSBJPM193N": {"units": "lin", "frequency": "m"},
-    "JPNRGDPIGS": {"units": "lin", "frequency": "q"},
+    "XTIMVA01JPM667S": {"units": "lin", "frequency": "m"},
     "DEXJPUS": {"units": "lin", "frequency": "d"},
     "NGDPSAXDCJPQ": {"units": "lin", "frequency": "q"},
+    "CSCICP02JPM460S": {"units": "lin", "frequency": "m"},
 }
 
 READABLE_NAMES = {
-    #"JPNEPUINDXM": "EPU_JAP",
     "JPNPROINDMISMEI": "IP_JAP",
     "FPCPITOTLZGJPN": "INF_YoY_JAP",
     "LRUN64TTJPM156S": "UNEMP_JAP",
-    "JPNRGDPEGS": "EX_JAP",
-    "JPNRGDPIGS": "IM_JAP",
+    "XTEXVA01JPM667S": "EX_JAP",
+    "XTIMVA01JPM667S": "IM_JAP",
     "JPNRECDP": "RECESS_JAP",
     "JPNRGDPEXP": "GDP_JAP",
     "JPNRGDPC": "GDPC_JAP",
     "INTGSBJPM193N": "10YS_JAP",
     "DEXJPUS": "EXR_JAP",
-    "NGDPSAXDCJPQ": "NGDP_JAP"
+    "NGDPSAXDCJPQ": "NGDP_JAP",
+    "CSCICP02JPM460S":"CCI_JAP"
 }
 
 # Series that are in billions and need to be converted to millions
-BILLION_TO_MILLION = {"JPNRGDPEGS", "JPNRGDPIGS", "JPNRGDPEXP"}
+BILLION_TO_MILLION = {"JPNRGDPEXP"}
+TO_BILLIONS = {"XTEXVA01JPM667S", "XTIMVA01JPM667S"}
 
 # --- Functions ---
 def fetch_fred_series(series_id, options):
@@ -65,6 +66,9 @@ def fetch_fred_series(series_id, options):
         # Convert from billions to millions
         if series_id in BILLION_TO_MILLION:
             df[series_id] /= 10
+
+        if series_id in TO_BILLIONS:
+            df[series_id] /= 1_000_000_000
 
         # Convert daily data to monthly
         if options["frequency"] == "d":

@@ -12,7 +12,6 @@ FILE_PATH = "../data/raw/inflation/Mexico_Inflation_Data.csv"
 
 # --- FRED Series ---
 FRED_SERIES = {
-    #"WUIMEX": {"units": "lin", "frequency": "q"},
     "MEXPRINTO02IXOBSAM": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGMEX": {"units": "lin", "frequency": "a"},
     "NGDPRSAXDCMXQ": {"units": "lin", "frequency": "q"},
@@ -21,22 +20,21 @@ FRED_SERIES = {
     "FXRATEMXA618NUPN": {"units": "lin", "frequency": "a"},
     "LRHUTTTTMXM156S": {"units": "lin", "frequency": "m"},
     "NYGDPPCAPKDMEX": {"units": "lin", "frequency": "a"},
-    "NMRSAXDCMXQ":{"units": "lin", "frequency": "q"},
-    "NXRSAXDCMXQ":{"units": "lin", "frequency": "q"},
+    "XTIMVA01MXM667S":{"units": "lin", "frequency": "m"},
+    "XTEXVA01MXM667S":{"units": "lin", "frequency": "m"},
     "MEXRECD": {"units": "lin", "frequency": "d"}, # Convert to monthly
 }
 
 # --- Readable Names ---
 READABLE_NAMES = {
-    #"WUIMEX": "EPU_MEX",
     "MEXPRINTO02IXOBSAM": "IP_MEX",
     "FPCPITOTLZGMEX": "INF_YoY_MEX",
     "NGDPRSAXDCMXQ": "GDP_MEX",     # In Millions, need to convert to Billions
     "INTGSBMXM193N": "1OYS_MEX",
     "IRLTST01MXM156N": "2YS_MEX",
     "FXRATEMXA618NUPN": "EXR_MEX",
-    "NMRSAXDCMXQ": "IM_MEX",
-    "NXRSAXDCMXQ":"EX_MEX",
+    "XTIMVA01MXM667S": "IM_MEX",
+    "XTEXVA01MXM667S":"EX_MEX",
     "LRHUTTTTMXM156S": "UNEMP_MEX",
     "NYGDPPCAPKDMEX": "GDPC_MEX",
     "MEXRECD": "RECESS_MEX"
@@ -47,7 +45,8 @@ WORLD_BANK_SERIES = {
     #"SL.UEM.TOTL.ZS": "UNEMP_MEX+",
     #"NY.GDP.PCAP.CD": "GDPC_MEX+"
 }
-MILLION_TO_BILLION = {"NGDPRSAXDCMXQ", "NXRSAXDCMXQ", "NMRSAXDCMXQ"}
+MILLION_TO_BILLION = {"NGDPRSAXDCMXQ"}
+TO_BILLIONS = {"XTIMVA01MXM667S", "XTEXVA01MXM667S"}
 # --- Fetch FRED Series ---
 def fetch_fred_series(series_id, options):
     print(f"Fetching FRED: {series_id}")
@@ -69,6 +68,9 @@ def fetch_fred_series(series_id, options):
         # Convert from billions to millions
         if series_id in MILLION_TO_BILLION:
             df[series_id] /= 1_000
+
+        if series_id in TO_BILLIONS:
+            df[series_id] /= 1_000_000_000
 
         # Convert daily data to monthly
         if options["frequency"] == "d":

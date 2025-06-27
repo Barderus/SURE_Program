@@ -20,8 +20,8 @@ FRED_SERIES = {
     "CANPROINDMISMEI": {"units": "lin", "frequency": "m"},
     "IRLTLT01CAQ156N": {"units": "lin", "frequency": "q"},
     "FPCPITOTLZGCAN": {"units": "lin", "frequency": "a"},
-    "NXRSAXDCCAQ": {"units": "lin", "frequency": "q"},
-    "NMRSAXDCCAQ": {"units": "lin", "frequency": "q"},
+    "XTEXVA01CAM667S": {"units": "lin", "frequency": "m"},
+    "XTIMVA01CAM667S": {"units": "lin", "frequency": "m"},
     "CANRECDM": {"units": "lin", "frequency": "m"},
     "NGDPRSAXDCCAQ": {"units": "lin", "frequency": "q"},
     "CANRGDPC": {"units": "lin", "frequency": "a"},
@@ -36,8 +36,8 @@ READABLE_NAMES = {
     "CANPROINDMISMEI": "IP_CAN",
     "IRLTLT01CAQ156N": "10YS_CAN",
     "FPCPITOTLZGCAN": "INF_YoY_CAN",
-    "NXRSAXDCCAQ": "EX_CAN",
-    "NMRSAXDCCAQ": "IM_CAN",
+    "XTEXVA01CAM667S": "EX_CAN",
+    "XTIMVA01CAM667S": "IM_CAN",
     "CANRECDM": "RECESS_CAN",
     "NGDPRSAXDCCAQ": "GDP_CAN",
     "CANRGDPC": "GDPC_CAN",
@@ -47,7 +47,7 @@ READABLE_NAMES = {
     "LRUNTTTTCAM156S": "UNEMP_CAN"
 }
 
-MILLION_TO_BILLION = {"NGDPRSAXDCCAQ", "NXRSAXDCCAQ", "NMRSAXDCCAQ"}
+MILLION_TO_BILLION = {"NGDPRSAXDCCAQ"}
 # --- Functions ---
 def fetch_fred_series(series_id, options):
     print(f"Fetching FRED: {series_id}")
@@ -70,9 +70,14 @@ def fetch_fred_series(series_id, options):
         if options["frequency"] == "d":
             df = df.resample("MS", on="date").mean(numeric_only=True).reset_index()
 
-        # Convert from billions to millions
+        RAW_TO_BILLION = ["XTEXVA01CAM667S", "XTIMVA01CAM667S"]
+
+        # Convert values based on series_id
         if series_id in MILLION_TO_BILLION:
-            df[series_id] /= 1_000
+            df[series_id] /= 1_000  # from millions to billions
+
+        elif series_id in RAW_TO_BILLION:
+            df[series_id] /= 1_000_000_000  # from raw to billions
 
         df = df[["date", series_id]]
 

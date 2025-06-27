@@ -17,8 +17,8 @@ SERIES_LIST = {
     "T10Y2Y": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGUSA": {"units": "lin", "frequency": "a"},
     "UNRATE": {"units": "lin", "frequency": "m"},
-    "EXPGSC1": {"units": "lin", "frequency": "q"},
-    "IMPGSC1":{"units": "lin", "frequency": "q"},
+    "XTIMVA01USM667S": {"units": "lin", "frequency": "m"},
+    "XTEXVA01USM664S":{"units": "lin", "frequency": "m"},
     "USARECDM": {"units": "lin", "frequency": "m"},
     "GDPC1": {"units": "lin", "frequency": "q"},
     "A939RX0Q048SBEA": {"units": "lin", "frequency": "q"},
@@ -31,8 +31,8 @@ READABLE_NAMES = {
     "T10Y2Y": "YS_USA",
     "FPCPITOTLZGUSA": "INF_YoY_USA",
     "UNRATE": "UNEMP_USA",
-    "EXPGSC1": "EX_USA",    # In Billions
-    "IMPGSC1": "IM_USA",    # In Billions
+    "XTIMVA01USM667S": "EX_USA",    # In USD
+    "XTEXVA01USM664S": "IM_USA",    # In USD
     "USARECDM": "RECESS_USA",
     "GDPC1": "GDP_USA",     # In billions
     "A939RX0Q048SBEA": "GDPC_USA",
@@ -40,7 +40,7 @@ READABLE_NAMES = {
 }
 
 # Series that are in billions and need to be converted to millions
-BILLION_TO_MILLION = {"EXPGSC1", "IMPGSC1"}
+TO_BILLIONS = {"XTIMVA01USM667S", "XTEXVA01USM664S"}
 
 
 # --- Functions ---
@@ -61,6 +61,10 @@ def fetch_fred_series(series_id, options):
         df = pd.DataFrame(data["observations"])
         df["date"] = pd.to_datetime(df["date"])
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
+
+        # Convert values based on series_id
+        if series_id in TO_BILLIONS:
+            df[series_id] /= 1_000_000_000  #  to billions
 
         return df[["date", series_id]]
     except Exception as e:

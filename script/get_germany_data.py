@@ -18,12 +18,13 @@ FRED_SERIES = {
     "DEUPROINDMISMEI": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGDEU": {"units": "lin", "frequency": "a"},
     "LRHUTTTTDEM156S": {"units": "lin", "frequency": "m"},
-    "NMRSAXDCDEQ": {"units": "lin", "frequency": "q"},
-    "DEUEXPORTQDSNAQ": {"units": "lin", "frequency": "q"},
+    "XTIMVA01DEM667S": {"units": "lin", "frequency": "m"},
+    "XTEXVA01DEM667S": {"units": "lin", "frequency": "m"},
     "DEURECD": {"units": "lin", "frequency": "m"},
     "CLVMEURSCAB1GQDE": {"units": "lin", "frequency": "q"},
     "DEURGDPC": {"units": "lin", "frequency": "a"},
     "INTGSBDEM193N": {"units": "lin", "frequency": "m"},
+    "CSCICP02DEM460S": {"units": "lin", "frequency": "m"},
 }
 
 READABLE_NAMES = {
@@ -31,14 +32,16 @@ READABLE_NAMES = {
     "DEUPROINDMISMEI": "IP_GER",
     "FPCPITOTLZGDEU": "INF_YoY_GER",
     "LRHUTTTTDEM156S": "UNEMP_GER",
-    "NMRSAXDCDEQ": "IM_GER",
-    "DEUEXPORTQDSNAQ": "EX_GER",
+    "XTIMVA01DEM667S": "IM_GER",
+    "XTEXVA01DEM667S": "EX_GER",
     "DEURECD": "RECESS_GER",
     "CLVMEURSCAB1GQDE": "GDP_GER",      # Unites are in millions, need to transform to billions
     "DEURGDPC": "GDPC_GER",
     "INTGSBDEM193N": "10YS_GER",
+    "CSCICP02DEM460S": "CCI_GER",
 }
-MILLION_TO_BILLION = {"CLVMEURSCAB1GQDE", "DEUEXPORTQDSNAQ", "NMRSAXDCDEQ"}
+MILLION_TO_BILLION = {"CLVMEURSCAB1GQDE"}
+TO_BILLIONS = {"XTIMVA01DEM667S", "XTEXVA01DEM667S"}
 # --- Functions ---
 
 def fetch_fred_series(series_id, options):
@@ -63,12 +66,11 @@ def fetch_fred_series(series_id, options):
             print(f"\n[Transforming Series: {series_id}]")
             print("Before transformation:")
             print(df[[series_id]].head())
+            print("After transformation:")
+            print(df[[series_id]].head())
 
-            if series_id == "DEUEXPORTQDSNAQ":
-                df[series_id] /= 1_000_000_000  # Euros → Billions of Euros
-            else:
-                df[series_id] /= 1_000  # Millions → Billions
-
+        if series_id in TO_BILLIONS:
+            df[series_id] /= 1_000_000_000  # Euros → Billions of Euros
             print("After transformation:")
             print(df[[series_id]].head())
 

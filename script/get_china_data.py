@@ -11,39 +11,37 @@ BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
 
 # FRED series configuration
 FRED_SERIES = {
-    #"CHIEPUINDXM": {"units": "lin", "frequency": "m"},
     "CHNPRINTO01IXPYM": {"units": "lin", "frequency": "m"},
     "FPCPITOTLZGCHN": {"units": "lin", "frequency": "a"},
     "NMRXDCCNA": {"units": "lin", "frequency": "a"},
     "NXRXDCCNA": {"units": "lin", "frequency": "a"},
-    #"CHNXTNTVA01STSAQ": {"units": "lin", "frequency": "q"},
     "CHNRECDM": {"units": "lin", "frequency": "m"},
-    #"NGDPRXDCCNA": {"units": "lin", "frequency": "a"},
+    "CHNGDPNQDSMEI": {"units": "lin", "frequency": "q"},
     "INTDSRCNM193N": {"units": "lin", "frequency": "m"},
     "CCUSSP02CNM650N": {"units": "lin", "frequency": "m"},
+    "CHNCPIALLMINMEI": {"units": "lin", "frequency": "m"},
 }
 
 # Human-readable column names
 READABLE_NAMES = {
-    #"CHIEPUINDXM": "EPU_CHI",
     "CHNPRINTO01IXPYM": "IP_CHI",
     "FPCPITOTLZGCHN": "INF_CHI",
     "NMRXDCCNA": "IM_CHI",
     "NXRXDCCNA": "EX_CHI",
-    #"CHNXTNTVA01STSAQ": "TB_CHI",
     "CHNRECDM": "RECESS_CHI",
-    #"NGDPRXDCCNA": "GDP_CHI",
+    "CHNGDPNQDSMEI": "GDP_CHI",
     "INTDSRCNM193N": "10YS_CHI",
     "CCUSSP02CNM650N": "EXR_CHI",
+    "CHNCPIALLMINMEI": "CPI_CHI",
 }
 
 # World Bank series configuration
 WORLD_BANK_SERIES = {
     "SL.UEM.TOTL.ZS": "UNEMP_CHI",
     "NY.GDP.PCAP.CD": "GDPC_CHI",
-    "NY.GDP.MKTP.KD": "GDP_CHI"
+    #"NY.GDP.MKTP.KD": "GDP_CHI"
 }
-MILLION_TO_BILLION = {"NXRXDCCNA", "NMRXDCCNA"}
+MILLION_TO_BILLION = {"NXRXDCCNA", "NMRXDCCNA", "CHNGDPNQDSMEI"}
 # --- Functions ---
 
 def fetch_fred_series(series_id, options):
