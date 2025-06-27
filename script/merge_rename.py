@@ -8,12 +8,14 @@ selected_files = [
     "../data/raw/japan_combined_fred_data_06-21-2025.csv",
     "../data/raw/us_combined_fred_data_06-21-2025.csv",
     "../data/raw/mexico_combined_data_06-21-2025.csv",
-    "../data/raw/china_combined_data_06-21-2025.csv",
+    "../data/raw/china_combined_data_06-22-2025.csv",
+
+    "../script/combined_df.csv",
 
     "../data/processed/CLEAN_CAN_EX_IM.csv",
     "../data/processed/CLEAN_USA_EX_IM.csv",
     "../data/processed/CLEAN_JPN_EX_IM.csv",
-    "../data/processed/CLEAN_MEX_EX_IM.csv",
+    "../data/processed/CLEAN_EX_IM.csv",    # New Germany EX/IM in USD dollars
     "../data/processed/CLEAN_GER_EX_IM.csv",
     "../data/processed/CLEAN_CHI_EX_IM.csv",
 
