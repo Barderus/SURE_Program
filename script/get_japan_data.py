@@ -12,33 +12,42 @@ FILE_PATH = "../data/raw/inflation/Japan_Inflation_Data.csv"
 
 
 FRED_SERIES = {
-    "JPNPROINDMISMEI": {"units": "lin", "frequency": "a"},
-    "FPCPITOTLZGJPN": {"units": "lin", "frequency": "a"},
+    #"INTGSBJPM193N": {"units": "lin", "frequency": "m"},
     "LRUN64TTJPM156S": {"units": "lin", "frequency": "m"},
     "XTEXVA01JPM667S": {"units": "lin", "frequency": "m"},
-    "JPNRECDP": {"units": "lin", "frequency": "m"},
+    "JPNRGDPEGS": {"units": "lin", "frequency": "q"},
+    "XTIMVA01JPM667S": {"units": "lin", "frequency": "m"},
+    "JPNRGDPIGS": {"units": "lin", "frequency": "q"},
+    "JPNRECDM": {"units": "lin", "frequency": "m"},
     "JPNRGDPEXP": {"units": "lin", "frequency": "q"},
     "JPNRGDPC": {"units": "lin", "frequency": "a"},
-    "INTGSBJPM193N": {"units": "lin", "frequency": "m"},
-    "XTIMVA01JPM667S": {"units": "lin", "frequency": "m"},
     "DEXJPUS": {"units": "lin", "frequency": "d"},
-    "NGDPSAXDCJPQ": {"units": "lin", "frequency": "q"},
-    "CSCICP02JPM460S": {"units": "lin", "frequency": "m"},
+    "LFWA64TTJPQ647S": {"units": "lin", "frequency": "q"},
 }
 
 READABLE_NAMES = {
-    "JPNPROINDMISMEI": "IP_JAP",
-    "FPCPITOTLZGJPN": "INF_YoY_JAP",
+    #"INTGSBJPM193N": "10YS_JAP",
     "LRUN64TTJPM156S": "UNEMP_JAP",
-    "XTEXVA01JPM667S": "EX_JAP",
-    "XTIMVA01JPM667S": "IM_JAP",
-    "JPNRECDP": "RECESS_JAP",
+    "XTEXVA01JPM667S": "EX_M_JAP",
+    "JPNRGDPEGS": "EX_JAP",
+    "XTIMVA01JPM667S": "IM_M_JAP",
+    "JPNRGDPIGS": "IM_JAP",
+    "JPNRECDM": "RECESS_JAP",
     "JPNRGDPEXP": "GDP_JAP",
     "JPNRGDPC": "GDPC_JAP",
-    "INTGSBJPM193N": "10YS_JAP",
     "DEXJPUS": "EXR_JAP",
-    "NGDPSAXDCJPQ": "NGDP_JAP",
-    "CSCICP02JPM460S":"CCI_JAP"
+    "LFWA64TTJPQ647S": "POP_15-64_JAP"
+}
+
+MANUAL_DATA = {
+    "../data/manual-data/IP_JAP.csv",
+    "../data/manual-data/EPU_JAP.csv",
+    "../data/manual-data/YS_JAP.csv",
+    "../data/manual-data/GDPC_JAP.csv"
+    "../data/manual-data/CCI_JAP.csv"
+    "../data/manual-data/GDPG_JAP.csv",
+    "../data/manual-data/POP_JAP.csv"
+
 }
 
 # Series that are in billions and need to be converted to millions

@@ -12,39 +12,45 @@ FILE_PATH = "../data/raw/inflation/Mexico_Inflation_Data.csv"
 
 # --- FRED Series ---
 FRED_SERIES = {
-    "MEXPRINTO02IXOBSAM": {"units": "lin", "frequency": "m"},
-    "FPCPITOTLZGMEX": {"units": "lin", "frequency": "a"},
-    "NGDPRSAXDCMXQ": {"units": "lin", "frequency": "q"},
-    "IRLTST01MXM156N": {"units": "lin", "frequency": "m"},
     "INTGSBMXM193N": {"units": "lin", "frequency": "m"},
-    "FXRATEMXA618NUPN": {"units": "lin", "frequency": "a"},
+    "IRLTST01MXM156N": {"units": "lin", "frequency": "m"},
     "LRHUTTTTMXM156S": {"units": "lin", "frequency": "m"},
-    "NYGDPPCAPKDMEX": {"units": "lin", "frequency": "a"},
+    "NXRSAXDCMXQ": {"units": "lin", "frequency": "q"},
     "XTIMVA01MXM667S":{"units": "lin", "frequency": "m"},
-    "XTEXVA01MXM667S":{"units": "lin", "frequency": "m"},
-    "MEXRECD": {"units": "lin", "frequency": "d"}, # Convert to monthly
+    "NMRSAXDCMXQ": {"units": "lin", "frequency": "q"},
+    "MEXRECDM": {"units": "lin", "frequency": "d"}, # Convert to monthly
+    "NGDPRSAXDCMXQ": {"units": "lin", "frequency": "q"},
+    "CSCICP02MXM460S": {"units": "lin", "frequency": "m"},
+    "DEXMXUS": {"units": "lin", "frequency": "d"},
+    "LFWA64TTMXQ647N": {"units": "lin", "frequency": "m"},
+    "MEXPRINTO02IXOBSAM": {"units": "lin", "frequency": "m"},
 }
 
 # --- Readable Names ---
 READABLE_NAMES = {
-    "MEXPRINTO02IXOBSAM": "IP_MEX",
-    "FPCPITOTLZGMEX": "INF_YoY_MEX",
-    "NGDPRSAXDCMXQ": "GDP_MEX",     # In Millions, need to convert to Billions
     "INTGSBMXM193N": "1OYS_MEX",
     "IRLTST01MXM156N": "2YS_MEX",
-    "FXRATEMXA618NUPN": "EXR_MEX",
-    "XTIMVA01MXM667S": "IM_MEX",
-    "XTEXVA01MXM667S":"EX_MEX",
     "LRHUTTTTMXM156S": "UNEMP_MEX",
-    "NYGDPPCAPKDMEX": "GDPC_MEX",
-    "MEXRECD": "RECESS_MEX"
+    "XTEXVA01MXM667S":"EX_M_MEX",
+    "NXRSAXDCMXQ": "EX_MEX",
+    "XTIMVA01MXM667S": "IM_M_MEX",
+    "NMRSAXDCMXQ": "IM_MEX",
+    "MEXRECDM": "RECESS_MEX",
+    "NGDPRSAXDCMXQ": "GDP_MEX",     # In Millions, need to convert to Billions
+    "CSCICP02MXM460S": "CCI_MEX",
+    "DEXMXUS": "EXR_MEX",
+    "LFWA64TTMXQ647N": "POP_15-64_MEX",
+    "MEXPRINTO02IXOBSAM": "IP_MEX"
 }
 
-# --- World Bank Series ---
-WORLD_BANK_SERIES = {
-    #"SL.UEM.TOTL.ZS": "UNEMP_MEX+",
-    #"NY.GDP.PCAP.CD": "GDPC_MEX+"
+MANUAL_DATA = {
+    "../data/manual-data/INF_MEX.csv",
+    "../data/manual-data/EPU_MEX.csv",
+    "../data/manual-data/IP_MEX.csv",
+    "../data/manual-data/GDPC_MEX.csv",
+    "../data/manual-data/CCI_MEX.csv",
 }
+
 MILLION_TO_BILLION = {"NGDPRSAXDCMXQ"}
 TO_BILLIONS = {"XTIMVA01MXM667S", "XTEXVA01MXM667S"}
 # --- Fetch FRED Series ---

@@ -12,35 +12,39 @@ BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
 # FRED series configuration
 FRED_SERIES = {
     "CHNPRINTO01IXPYM": {"units": "lin", "frequency": "m"},
-    "FPCPITOTLZGCHN": {"units": "lin", "frequency": "a"},
-    "NMRXDCCNA": {"units": "lin", "frequency": "a"},
+    "INTDSRCNM193N": {"units": "lin", "frequency": "m"},
+    "CHNCPIALLMINMEI": {"units": "lin", "frequency": "m"},
     "NXRXDCCNA": {"units": "lin", "frequency": "a"},
+    "NMRXDCCNA": {"units": "lin", "frequency": "a"},
     "CHNRECDM": {"units": "lin", "frequency": "m"},
     "CHNGDPNQDSMEI": {"units": "lin", "frequency": "q"},
-    "INTDSRCNM193N": {"units": "lin", "frequency": "m"},
     "CCUSSP02CNM650N": {"units": "lin", "frequency": "m"},
-    "CHNCPIALLMINMEI": {"units": "lin", "frequency": "m"},
 }
 
 # Human-readable column names
 READABLE_NAMES = {
     "CHNPRINTO01IXPYM": "IP_CHI",
-    "FPCPITOTLZGCHN": "INF_CHI",
-    "NMRXDCCNA": "IM_CHI",
+    "INTDSRCNM193N": "10YS_CHI",
+    "CHNCPIALLMINMEI": "CPI_CHI",   # CPI previous month - current month / 100
     "NXRXDCCNA": "EX_CHI",
+    "NMRXDCCNA": "IM_CHI",
     "CHNRECDM": "RECESS_CHI",
     "CHNGDPNQDSMEI": "GDP_CHI",
-    "INTDSRCNM193N": "10YS_CHI",
     "CCUSSP02CNM650N": "EXR_CHI",
-    "CHNCPIALLMINMEI": "CPI_CHI",
 }
 
-# World Bank series configuration
-WORLD_BANK_SERIES = {
-    "SL.UEM.TOTL.ZS": "UNEMP_CHI",
-    "NY.GDP.PCAP.CD": "GDPC_CHI",
-    #"NY.GDP.MKTP.KD": "GDP_CHI"
+MANUAL_DATA = {
+    "../data/manual-data/EPU_CHI.csv",
+    "../data/manual-data/2YS_CHI.csv",
+    "../data/manual-data/UNEMP_CHI.csv",
+    "../data/manual-data/EX_M_CHI.csv",
+    "../data/manual-data/IM_M_CHI.csv",
+    "../data/manual-data/GDPC_CHI.csv",
+    "../data/manual-data/CCI_CHI.csv",
+    "../data/manual-data/GDPG_CHI.csv",
+    "../data/manual-data/POP_CHI.csv"
 }
+
 MILLION_TO_BILLION = {"NXRXDCCNA", "NMRXDCCNA", "CHNGDPNQDSMEI"}
 # --- Functions ---
 
@@ -72,36 +76,6 @@ def fetch_fred_series(series_id, options):
         return None
 
 
-def fetch_worldbank_series(indicator, column_name):
-    print(f"Fetching World Bank series: {indicator}")
-    url = f"https://api.worldbank.org/v2/country/CN/indicator/{indicator}?format=json&per_page=1000"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        data = response.json()[1]
-        df = pd.DataFrame([
-            {"year": item["date"], column_name: item["value"]}
-            for item in data if item["value"] is not None
-        ])
-
-        # Convert to datetime
-        df["date"] = pd.to_datetime(df["year"], format="%Y")
-        df["date"] = df["date"].dt.to_period("Y").dt.to_timestamp()
-
-        # Only apply transformation to GDP (World Bank GDP in trillions → billions)
-        if indicator == "NY.GDP.MKTP.KD":
-            print(f"\nBefore transformation:\n{df[[column_name]].head()}")
-            df[column_name] = df[column_name] / 1_000_000_000  # trillions → billions
-            print(f"\nAfter transformation:\n{df[[column_name]].head()}")
-
-
-
-        return df.drop(columns="year")
-    except Exception as e:
-        print(f"[World Bank] Error fetching {indicator}: {e}")
-        return None
-
-
 def main():
     print("Starting data collection...\n")
     combined_df = None
@@ -117,14 +91,6 @@ def main():
 
     if combined_df is not None:
         combined_df.rename(columns=READABLE_NAMES, inplace=True)
-
-    # Fetch World Bank data
-    for indicator, col_name in WORLD_BANK_SERIES.items():
-        wb_df = fetch_worldbank_series(indicator, col_name)
-        if wb_df is not None and combined_df is not None:
-            combined_df = pd.merge(combined_df, wb_df, on="date", how="outer")
-        elif wb_df is not None:
-            combined_df = wb_df
 
     # Save to CSV
     if combined_df is not None:

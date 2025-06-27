@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
 
-from script.get_mexico_data import MILLION_TO_BILLION
+from script.get_mexico_data import MILLION_TO_BILLION, MANUAL_DATA
 
 # --- Configuration ---
 
@@ -16,38 +16,37 @@ FILE_PATH = "../data/raw/inflation/Canada_Inflation_Data.csv"
 
 
 FRED_SERIES = {
-    #"CANEPUINDXM": {"units": "lin", "frequency": "m"},
-    "CANPROINDMISMEI": {"units": "lin", "frequency": "m"},
     "IRLTLT01CAQ156N": {"units": "lin", "frequency": "q"},
-    "FPCPITOTLZGCAN": {"units": "lin", "frequency": "a"},
+    "LRUNTTTTCAM156S": {"units":"lin", "frequency":"m"},
     "XTEXVA01CAM667S": {"units": "lin", "frequency": "m"},
+    "NXRSAXDCCAQ": {"units":"lin", "frequency":"q"},
     "XTIMVA01CAM667S": {"units": "lin", "frequency": "m"},
-    "CANRECDM": {"units": "lin", "frequency": "m"},
-    "NGDPRSAXDCCAQ": {"units": "lin", "frequency": "q"},
-    "CANRGDPC": {"units": "lin", "frequency": "a"},
-    #"INTGSBCAM193N": {"units": "lin", "frequency": "m"},
+    "NMRSAXDCCAQ": {"units":"lin", "frequency":"q"},
     "DEXCAUS": {"units": "lin", "frequency": "d"}, # Convert to monthly
-    "CSCICP03CAM665S": {"units": "lin", "frequency": "m"},
-    "LRUNTTTTCAM156S": {"units":"lin", "frequency":"m"}
+    "LFWA64TTCAM647S": {"units": "lin", "frequency": "m"},
+    "CANRECDM": {"units": "lin", "frequency": "m"},
 }
 
 READABLE_NAMES = {
-    #"CANEPUINDXM": "EPU_CAN",
-    "CANPROINDMISMEI": "IP_CAN",
     "IRLTLT01CAQ156N": "10YS_CAN",
-    "FPCPITOTLZGCAN": "INF_YoY_CAN",
-    "XTEXVA01CAM667S": "EX_CAN",
-    "XTIMVA01CAM667S": "IM_CAN",
-    "CANRECDM": "RECESS_CAN",
-    "NGDPRSAXDCCAQ": "GDP_CAN",
-    "CANRGDPC": "GDPC_CAN",
-    #"INTGSBCAM193N": "GBR_CAN",
+    "LRUNTTTTCAM156S": "UNEMP_CAN",
+    "XTEXVA01CAM667S": "EX_M_CAN",
+    "NXRSAXDCCAQ": "EX_CAN",
+    "XTIMVA01CAM667S": "IM_M_CAN",
+    "NMRSAXDCCAQ": "IM_CAN",
     "DEXCAUS": "EXR_CAN",
-    "CSCICP03CAM665S": "CCI_CAN",
-    "LRUNTTTTCAM156S": "UNEMP_CAN"
+    "LFWA64TTCAM647S": "POP_15-64_CAN",
+    "CANRECDM": "RECESS_CAN",
 }
 
-MILLION_TO_BILLION = {"NGDPRSAXDCCAQ"}
+MANUAL_DATA = {
+    "../data/manual-data/INF_CAN.csv",
+    "../data/manual-data/GDP_CAN.csv",
+    "../data/manual-data/GDPC_CAN.csv",
+}
+
+MILLION_TO_BILLION = {""}
+
 # --- Functions ---
 def fetch_fred_series(series_id, options):
     print(f"Fetching FRED: {series_id}")

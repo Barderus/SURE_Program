@@ -12,38 +12,47 @@ FILE_PATH = "../data/raw/inflation/USA_Inflation_Data.csv"
 
 
 SERIES_LIST = {
-    #"USEPUINDXD": {"units": "lin", "frequency": "m"},
     "INDPRO": {"units": "lin", "frequency": "m"},
     "T10Y2Y": {"units": "lin", "frequency": "m"},
-    "FPCPITOTLZGUSA": {"units": "lin", "frequency": "a"},
     "UNRATE": {"units": "lin", "frequency": "m"},
     "XTIMVA01USM667S": {"units": "lin", "frequency": "m"},
+    "EXPGSC1": {"units": "lin", "frequency": "q"},
     "XTEXVA01USM664S":{"units": "lin", "frequency": "m"},
-    "USARECDM": {"units": "lin", "frequency": "m"},
+    "IMPGSC1": {"units": "lin", "frequency": "q"},
+    "USREC": {"units": "lin", "frequency": "m"},
     "GDPC1": {"units": "lin", "frequency": "q"},
     "A939RX0Q048SBEA": {"units": "lin", "frequency": "q"},
     "UMCSENT": {"units": "lin", "frequency": "m"},
+    "LFWA64TTUSQ647S": {"units": "lin", "frequency": "m"},
+    "A191RL1Q225SBEA": {"units": "lin", "frequency": "q"},
 }
 
 READABLE_NAMES = {
-    #"USEPUINDXD": "EPU_USA",
     "INDPRO": "IP_USA",
     "T10Y2Y": "YS_USA",
-    "FPCPITOTLZGUSA": "INF_YoY_USA",
     "UNRATE": "UNEMP_USA",
-    "XTIMVA01USM667S": "EX_USA",    # In USD
-    "XTEXVA01USM664S": "IM_USA",    # In USD
-    "USARECDM": "RECESS_USA",
-    "GDPC1": "GDP_USA",     # In billions
-    "A939RX0Q048SBEA": "GDPC_USA",
+    "XTIMVA01USM667S": "EX_M_USA",    # In USD
+    "EXPGSC1": "EX_USA",              # In Billions USD
+    "XTEXVA01USM664S": "IM_M_USA",    # In USD
+    "IMPGSC1": "IM_USA",              # In Billions USD
+    "USREC": "RECESS_USA",
+    "GDPC1": "GDP_USA",               # In billions USD
+    "A939RX0Q048SBEA": "GDPC_USA",    # In USD
     "UMCSENT": "CCI_USA",
+    "LFWA64TTUSQ647S": "POP_15-64_USA",
+    "A191RL1Q225SBEA": "GDPG_Period_USA"
+}
+
+MANUAL_DATA = {
+    "../data/manual-data/INF_USA.csv",
+    "../data/manual-data/EPU_USA.csv",
 }
 
 # Series that are in billions and need to be converted to millions
 TO_BILLIONS = {"XTIMVA01USM667S", "XTEXVA01USM664S"}
 
 
-# --- Functions ---
+# --- Functions ---+
 def fetch_fred_series(series_id, options):
     print(f"Fetching {series_id}...")
     params = {
