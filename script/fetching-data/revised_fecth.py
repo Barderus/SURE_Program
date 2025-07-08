@@ -116,7 +116,7 @@ def main():
     df_all = pd.concat(all_series, axis=1).sort_index()
 
     # --- Merge External 2Y Spread CSVs ---
-    spread_dir = "../data/"
+    spread_dir = "../../data/"
     spread_files = {
         'China_2Y': os.path.join(spread_dir, 'China-2Y.csv'),
         'Japan_2Y': os.path.join(spread_dir, 'Japan-2Y.csv'),
@@ -140,7 +140,7 @@ def main():
     df_all = df_all.ffill()
 
     # --- Output ---
-    output_path = "../data/raw/spread/yield_data_full.csv"
+    output_path = "../../data/raw/spread/yield_data_full.csv"
     df_all.to_csv(output_path)
     logging.info(f"Data saved to {output_path}")
 

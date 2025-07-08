@@ -7,7 +7,7 @@ df = df.loc[:, ~df.columns.str.contains("^Unnamed")]
 # Drop 'date' column, but keep 'Country'
 df_numeric = df.drop(columns=["date"])
 # Output path
-output_path = "../data/summary_tables/variable_summary.xlsx"
+output_path = "../../data/summary_tables/variable_summary.xlsx"
 
 # Start writing Excel
 with pd.ExcelWriter(output_path) as writer:

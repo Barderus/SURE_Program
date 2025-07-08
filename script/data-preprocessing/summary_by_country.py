@@ -5,7 +5,7 @@ df = pd.read_excel("../data/summary_tables/panel_dataset_country_col.xlsx")
 
 # Drop unnamed/empty columns
 df = df.loc[:, ~df.columns.str.contains("^Unnamed")]
-output_dir = "../data/summary_tables/"
+output_dir = "../../data/summary_tables/"
 
 os.makedirs(output_dir, exist_ok=True)
 output_path = os.path.join(output_dir, "country_summary_tables.xlsx")

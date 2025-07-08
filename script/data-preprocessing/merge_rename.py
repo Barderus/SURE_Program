@@ -91,7 +91,7 @@ if __name__ == "__main__":
     print(df.columns)
 
     # Save raw merged output
-    output_path = "../data/processed/master_file1.csv"
+    output_path = "../../data/processed/master_file1.csv"
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df.to_csv(output_path, index=False)
     print(f"\nSaved to {output_path}")
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     # Save cleaned output
     df_cleaned.to_csv("../data/processed/master_file1_cleaned.csv", index=False)
 
-    columns_output_path = "../data/processed/master_file1_columns.txt"
+    columns_output_path = "../../data/processed/master_file1_columns.txt"
     with open(columns_output_path, "w") as f:
         for col in df.columns:
             f.write(f"{col}\n")

@@ -2,8 +2,8 @@ import pandas as pd
 import os
 
 # Directory paths
-raw_dir = "../data/EPU/"
-processed_dir = "../data/EPU/"
+raw_dir = "../../data/EPU/"
+processed_dir = "../../data/EPU/"
 
 # List of country codes and file names
 countries = {

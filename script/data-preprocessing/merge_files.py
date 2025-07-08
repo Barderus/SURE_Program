@@ -5,7 +5,7 @@ This script merges the files in the MERGE folder since pandas was being super an
 import os
 import pandas as pd
 
-DATA_DIR = "../data/MERGE"
+DATA_DIR = "../../data/MERGE"
 
 # List of all cleaned CSV filenames
 files_to_merge = [

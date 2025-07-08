@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv("FRED_API_KEY")
 BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
-FILE_PATH = "../data/raw/inflation/USA_Inflation_Data.csv"
+FILE_PATH = "../../data/raw/inflation/USA_Inflation_Data.csv"
 
 SERIES_LIST = {
     "INDPRO": {"units": "lin", "frequency": "m"},

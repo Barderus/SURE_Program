@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("../data/MERGE/master_file_merged.csv", parse_dates=["date"])
+df = pd.read_csv("../../data/MERGE/master_file_merged.csv", parse_dates=["date"])
 
 # Filter from 1995 onward
 df = df[df["date"] >= "1995-01-01"]
@@ -24,5 +24,5 @@ panel_df["date"] = pd.to_datetime(panel_df["date"]).dt.strftime("%Y-%m")
 panel_df = panel_df.sort_values(["Country", "date"]).reset_index(drop=True)
 
 # Save to Excel
-output_path = "../data/summary_tables/panel_dataset_country_col.xlsx"
+output_path = "../../data/summary_tables/panel_dataset_country_col.xlsx"
 panel_df.to_excel(output_path, index=False)

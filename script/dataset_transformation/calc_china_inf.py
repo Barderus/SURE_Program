@@ -2,7 +2,7 @@ import pandas as pd
 
 # Load the downloaded CPI data from FRED
 # Make sure your CSV file is named correctly or adjust the path
-df = pd.read_csv("../data/CHNCPIALLMINMEI.csv")
+df = pd.read_csv("../../data/CHNCPIALLMINMEI.csv")
 
 # Rename columns for clarity
 df.columns = ["date", "CPI_Index"]

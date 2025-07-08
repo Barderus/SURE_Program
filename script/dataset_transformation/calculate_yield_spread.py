@@ -2,9 +2,9 @@ import os
 import pandas as pd
 
 # Input directory with full yield data
-input_dir = "../data/raw/spread"
+input_dir = "../../data/raw/spread"
 # Output directory to save spread-only files
-output_dir = "../data/raw/spread/spread_only"
+output_dir = "../../data/raw/spread/spread_only"
 os.makedirs(output_dir, exist_ok=True)
 
 # Map of filenames to their 10Y and 2Y yield column names
