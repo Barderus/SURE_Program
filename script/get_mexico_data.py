@@ -12,8 +12,8 @@ FILE_PATH = "../data/raw/inflation/Mexico_Inflation_Data.csv"
 
 # --- FRED Series ---
 FRED_SERIES = {
-    "INTGSBMXM193N": {"units": "lin", "frequency": "m"},
-    "IRLTST01MXM156N": {"units": "lin", "frequency": "m"},
+    #"INTGSBMXM193N": {"units": "lin", "frequency": "m"},
+    #"IRLTST01MXM156N": {"units": "lin", "frequency": "m"},
     "LRHUTTTTMXM156S": {"units": "lin", "frequency": "m"},
     "NXRSAXDCMXQ": {"units": "lin", "frequency": "q"},
     "XTIMVA01MXM667S":{"units": "lin", "frequency": "m"},
@@ -22,14 +22,14 @@ FRED_SERIES = {
     "NGDPRSAXDCMXQ": {"units": "lin", "frequency": "q"},
     "CSCICP02MXM460S": {"units": "lin", "frequency": "m"},
     "DEXMXUS": {"units": "lin", "frequency": "d"},
-    "LFWA64TTMXQ647N": {"units": "lin", "frequency": "m"},
+    "LFWA64TTMXQ647N": {"units": "lin", "frequency": "q"},
     "MEXPRINTO02IXOBSAM": {"units": "lin", "frequency": "m"},
 }
 
 # --- Readable Names ---
 READABLE_NAMES = {
-    "INTGSBMXM193N": "1OYS_MEX",
-    "IRLTST01MXM156N": "2YS_MEX",
+    #"INTGSBMXM193N": "1OYS_MEX",
+    #"IRLTST01MXM156N": "2YS_MEX",
     "LRHUTTTTMXM156S": "UNEMP_MEX",
     "XTEXVA01MXM667S":"EX_M_MEX",
     "NXRSAXDCMXQ": "EX_MEX",
@@ -47,8 +47,6 @@ MANUAL_DATA = {
     "../data/manual-data/INF_MEX.csv",
     "../data/manual-data/EPU_MEX.csv",
     "../data/manual-data/IP_MEX.csv",
-    "../data/manual-data/GDPC_MEX.csv",
-    "../data/manual-data/CCI_MEX.csv",
 }
 
 MILLION_TO_BILLION = {"NGDPRSAXDCMXQ"}
@@ -87,26 +85,32 @@ def fetch_fred_series(series_id, options):
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
 
-# --- Fetch World Bank Series ---
-def fetch_world_bank_series(series_id, country_code):
-    print(f"Fetching World Bank: {series_id}")
-    url = f"http://api.worldbank.org/v2/country/{country_code}/indicator/{series_id}?format=json&per_page=1000"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        json_data = response.json()
-        if len(json_data) < 2 or not isinstance(json_data[1], list):
-            print(f"[World Bank] No data returned for {series_id}")
-            return None
-        records = json_data[1]
-        df = pd.DataFrame([
-            {"date": pd.to_datetime(entry["date"]), series_id: entry["value"]}
-            for entry in records if entry["value"] is not None
-        ])
-        return df.sort_values("date")
-    except Exception as e:
-        print(f"[World Bank] Error fetching {series_id}: {e}")
-        return None
+def load_manual_data():
+    manual_dfs = []
+    for path in MANUAL_DATA:
+        if os.path.exists(path):
+            print(f"Reading manual file: {path}")
+            df = pd.read_csv(path)
+
+            # Ensure date is properly parsed
+            if 'date' in df.columns:
+                df['date'] = pd.to_datetime(df['date'], errors='coerce')
+            else:
+                print(f"[Warning] No 'date' column in {path}")
+                continue
+
+            # Rename value column
+            value_cols = [col for col in df.columns if col.lower() != "date"]
+            if value_cols:
+                value_col = value_cols[0]
+                df.rename(columns={value_col: value_col.upper()}, inplace=True)
+                manual_dfs.append(df[["date", value_col.upper()]])
+            else:
+                print(f"[Warning] No value column found in {path}")
+        else:
+            print(f"[Warning] File not found: {path}")
+    return manual_dfs
+
 
 # --- Combine FRED data ---
 def collect_mexico_data():
@@ -135,6 +139,11 @@ def collect_mexico_data():
 
             combined_df = pd.merge(combined_df, inflation_df, on="date", how="outer")
 
+        # Load and merge manual datasets
+        for manual_df in load_manual_data():
+            combined_df = pd.merge(combined_df, manual_df, on="date", how="outer")
+
+
         # Sort final output
         combined_df = combined_df.sort_values("date")
 
@@ -143,7 +152,7 @@ def collect_mexico_data():
 # --- Save ---
 def save_to_csv(df, prefix="mexico_combined_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"../data/raw/{prefix}_{timestamp}.csv"
+    filename = f"../data/combined_data/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename
@@ -152,8 +161,8 @@ def main():
     print("Starting Mexico data collection...\n")
     df = collect_mexico_data()
     if df is not None:
-        #df = merge_world_bank_data(df)
-        filename = save_to_csv(df)
+        df.drop(columns=["INFLATION"], inplace=True)
+        #filename = save_to_csv(df)
         print(df.tail(10))
         print(f"Total rows: {len(df)}")
         print(df.columns)

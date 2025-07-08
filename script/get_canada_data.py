@@ -42,6 +42,7 @@ READABLE_NAMES = {
 MANUAL_DATA = {
     "../data/manual-data/INF_CAN.csv",
     "../data/manual-data/GDP_CAN.csv",
+    "../data/manual-data/GDP_Q_CAN.csv",
     "../data/manual-data/GDPC_CAN.csv",
 }
 
@@ -85,6 +86,32 @@ def fetch_fred_series(series_id, options):
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
 
+def load_manual_data():
+    manual_dfs = []
+    for path in MANUAL_DATA:
+        if os.path.exists(path):
+            print(f"Reading manual file: {path}")
+            df = pd.read_csv(path)
+
+            # Ensure date is properly parsed
+            if 'date' in df.columns:
+                df['date'] = pd.to_datetime(df['date'], errors='coerce')
+            else:
+                print(f"[Warning] No 'date' column in {path}")
+                continue
+
+            # Rename value column
+            value_cols = [col for col in df.columns if col.lower() != "date"]
+            if value_cols:
+                value_col = value_cols[0]
+                df.rename(columns={value_col: value_col.upper()}, inplace=True)
+                manual_dfs.append(df[["date", value_col.upper()]])
+            else:
+                print(f"[Warning] No value column found in {path}")
+        else:
+            print(f"[Warning] File not found: {path}")
+    return manual_dfs
+
 
 def collect_canada_data():
     combined_df = None
@@ -111,13 +138,18 @@ def collect_canada_data():
 
             combined_df = pd.merge(combined_df, inflation_df, on="date", how="outer")
 
+        # Load and merge manual datasets
+        for manual_df in load_manual_data():
+            combined_df = pd.merge(combined_df, manual_df, on="date", how="outer")
+
+
+        # Sort final output
         combined_df = combined_df.sort_values("date")
 
     return combined_df
-
 def save_to_csv(df, prefix="canada_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"../data/raw/{prefix}_{timestamp}.csv"
+    filename = f"../data/combined_data/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename
@@ -127,12 +159,13 @@ def main():
     df = collect_canada_data()
 
     if df is not None:
+        df.drop(columns=["INFLATION"], inplace=True)
         filename = save_to_csv(df)
         print(df.tail(10))
         print(f"Total rows: {len(df)}")
         print(df.columns)
     else:
-        print("\nNo data was collected.")
+        print("\nNo FRED data was collected.")
 
 if __name__ == "__main__":
     main()

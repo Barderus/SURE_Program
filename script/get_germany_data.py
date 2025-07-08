@@ -86,22 +86,32 @@ def fetch_fred_series(series_id, options):
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
 
-def fetch_worldbank_exchange_rate():
-    print("Fetching World Bank: Exchange Rate (PA.NUS.FCRF)")
-    url = "https://api.worldbank.org/v2/country/DE/indicator/PA.NUS.FCRF?format=json&per_page=1000"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        data = response.json()[1]
-        df = pd.DataFrame([
-            {"year": item["date"], "EXR_GER": item["value"]}
-            for item in data if item["value"] is not None
-        ])
-        df["date"] = pd.to_datetime(df["year"], format="%Y").dt.to_period("Y").dt.to_timestamp()
-        return df.drop(columns="year")
-    except Exception as e:
-        print(f"[World Bank] Error fetching exchange rate: {e}")
-        return None
+def load_manual_data():
+    manual_dfs = []
+    for path in MANUAL_DATA:
+        if os.path.exists(path):
+            print(f"Reading manual file: {path}")
+            df = pd.read_csv(path)
+
+            # Ensure date is properly parsed
+            if 'date' in df.columns:
+                df['date'] = pd.to_datetime(df['date'], errors='coerce')
+            else:
+                print(f"[Warning] No 'date' column in {path}")
+                continue
+
+            # Rename value column
+            value_cols = [col for col in df.columns if col.lower() != "date"]
+            if value_cols:
+                value_col = value_cols[0]
+                df.rename(columns={value_col: value_col.upper()}, inplace=True)
+                manual_dfs.append(df[["date", value_col.upper()]])
+            else:
+                print(f"[Warning] No value column found in {path}")
+        else:
+            print(f"[Warning] File not found: {path}")
+    return manual_dfs
+
 
 def collect_germany_data():
     combined_df = None
@@ -115,11 +125,6 @@ def collect_germany_data():
     # Rename columns
     if combined_df is not None:
         combined_df.rename(columns=READABLE_NAMES, inplace=True)
-
-    # World Bank: Exchange rate
-    wb_df = fetch_worldbank_exchange_rate()
-    if wb_df is not None:
-        combined_df = pd.merge(combined_df, wb_df, on="date", how="outer")
 
     # Add local inflation file
     if combined_df is not None:
@@ -142,7 +147,7 @@ def collect_germany_data():
 
 def save_to_csv(df, prefix="germany_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"../data/raw/{prefix}_{timestamp}.csv"
+    filename = f"../data/combined_data/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename

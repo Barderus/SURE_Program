@@ -35,14 +35,10 @@ READABLE_NAMES = {
 
 MANUAL_DATA = {
     "../data/manual-data/EPU_CHI.csv",
-    "../data/manual-data/2YS_CHI.csv",
+    "../data/manual-data/2YS_CHI_C.csv",
     "../data/manual-data/UNEMP_CHI.csv",
-    "../data/manual-data/EX_M_CHI.csv",
-    "../data/manual-data/IM_M_CHI.csv",
+    "../data/manual-data/EX_IM_CHI.csv",
     "../data/manual-data/GDPC_CHI.csv",
-    "../data/manual-data/CCI_CHI.csv",
-    "../data/manual-data/GDPG_CHI.csv",
-    "../data/manual-data/POP_CHI.csv"
 }
 
 MILLION_TO_BILLION = {"NXRXDCCNA", "NMRXDCCNA", "CHNGDPNQDSMEI"}
@@ -62,10 +58,14 @@ def fetch_fred_series(series_id, options):
         response.raise_for_status()
         data = response.json()
         df = pd.DataFrame(data["observations"])
-        df["date"] = pd.to_datetime(df["date"])
+
+        # Convert date to YYYY-MM string format
+        df["date"] = pd.to_datetime(df["date"], errors="coerce").dt.strftime("%Y-%m")
+
+        # Convert values to numeric
         df[series_id] = pd.to_numeric(df["value"], errors="coerce")
 
-        # Convert from millions to billions
+        # Convert from millions to billions if needed
         if series_id in MILLION_TO_BILLION:
             df[series_id] /= 1_000
 
@@ -76,6 +76,39 @@ def fetch_fred_series(series_id, options):
         return None
 
 
+def load_manual_data():
+    manual_dfs = []
+
+    for path in MANUAL_DATA:
+        if os.path.exists(path):
+            print(f"Reading manual file: {path}")
+            df = pd.read_csv(path)
+
+            if 'date' in df.columns:
+                df['date'] = pd.to_datetime(df['date'], errors='coerce').dt.strftime("%Y-%m")
+            else:
+                print(f"[Warning] No 'date' column in {path}")
+                continue
+
+            value_cols = [col for col in df.columns if col.lower() != "date"]
+            if value_cols:
+                df.rename(columns={col: col.upper() for col in value_cols}, inplace=True)
+                cleaned_df = df[["date"] + [col.upper() for col in value_cols]]
+                manual_dfs.append(cleaned_df)
+            else:
+                print(f"[Warning] No value column found in {path}")
+        else:
+            print(f"[Warning] File not found: {path}")
+
+    # Save all manual data into a single CSV file
+    if manual_dfs:
+        combined_manual = pd.concat(manual_dfs).drop_duplicates().sort_values("date")
+        combined_manual.to_csv("../data/combined_data/CHI_manual_data.csv", index=False)
+    else:
+        print("[Error] No manual data loaded.")
+
+    return manual_dfs  # So your for-loop in main() still works
+
 def main():
     print("Starting data collection...\n")
     combined_df = None
@@ -84,24 +117,30 @@ def main():
     for series_id, options in FRED_SERIES.items():
         df = fetch_fred_series(series_id, options)
         if df is not None:
-            if combined_df is None:
-                combined_df = df
-            else:
-                combined_df = pd.merge(combined_df, df, on="date", how="outer")
+            combined_df = df if combined_df is None else pd.merge(combined_df, df, on="date", how="outer")
 
     if combined_df is not None:
         combined_df.rename(columns=READABLE_NAMES, inplace=True)
 
-    # Save to CSV
-    if combined_df is not None:
+        # Merge manual data
+        for manual_df in load_manual_data():
+            # Ensure date is datetime for merge compatibility
+            manual_df["date"] = pd.to_datetime(manual_df["date"], errors="coerce")
+            combined_df["date"] = pd.to_datetime(combined_df["date"], errors="coerce")
+            #combined_df = pd.merge(combined_df, manual_df, on="date", how="outer")
+
         combined_df = combined_df.sort_values("date")
-        filename = f"../data/raw/china_combined_data_{datetime.now().strftime('%m-%d-%Y')}.csv"
+
+        # Save to CSV
+        filename = f"../data/combined_data/china_combined_data_{datetime.now().strftime('%m-%d-%Y')}.csv"
         combined_df.to_csv(filename, index=False)
         print(f"\nData saved to {filename}")
+        print(combined_df.tail(10))
+        print(f"Total rows: {len(combined_df)}")
+        print(combined_df.columns)
     else:
         print("\nNo data was collected or merged.")
 
-# --- Entry Point ---
 
 if __name__ == "__main__":
     main()

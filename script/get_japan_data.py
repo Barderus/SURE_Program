@@ -43,11 +43,6 @@ MANUAL_DATA = {
     "../data/manual-data/IP_JAP.csv",
     "../data/manual-data/EPU_JAP.csv",
     "../data/manual-data/YS_JAP.csv",
-    "../data/manual-data/GDPC_JAP.csv"
-    "../data/manual-data/CCI_JAP.csv"
-    "../data/manual-data/GDPG_JAP.csv",
-    "../data/manual-data/POP_JAP.csv"
-
 }
 
 # Series that are in billions and need to be converted to millions
@@ -91,6 +86,31 @@ def fetch_fred_series(series_id, options):
         print(f"[FRED] Error fetching {series_id}: {e}")
         return None
 
+def load_manual_data():
+    manual_dfs = []
+    for path in MANUAL_DATA:
+        if os.path.exists(path):
+            print(f"Reading manual file: {path}")
+            df = pd.read_csv(path)
+
+            # Ensure date is properly parsed
+            if 'date' in df.columns:
+                df['date'] = pd.to_datetime(df['date'], errors='coerce')
+            else:
+                print(f"[Warning] No 'date' column in {path}")
+                continue
+
+            # Rename value column
+            value_cols = [col for col in df.columns if col.lower() != "date"]
+            if value_cols:
+                value_col = value_cols[0]
+                df.rename(columns={value_col: value_col.upper()}, inplace=True)
+                manual_dfs.append(df[["date", value_col.upper()]])
+            else:
+                print(f"[Warning] No value column found in {path}")
+        else:
+            print(f"[Warning] File not found: {path}")
+    return manual_dfs
 
 def collect_japan_data():
     combined_df = None
@@ -114,14 +134,21 @@ def collect_japan_data():
             if inflation_col:
                 inflation_df.rename(columns={inflation_col[0]: f"INF_{country_code}"}, inplace=True)
 
-            # Merge with renamed & sorted dataset
             combined_df = pd.merge(combined_df, inflation_df, on="date", how="outer")
+
+        # Load and merge manual datasets
+        for manual_df in load_manual_data():
+            combined_df = pd.merge(combined_df, manual_df, on="date", how="outer")
+
+
+        # Sort final output
+        combined_df = combined_df.sort_values("date")
 
     return combined_df
 
 def save_to_csv(df, prefix="japan_combined_fred_data"):
     timestamp = datetime.now().strftime("%m-%d-%Y")
-    filename = f"../data/raw/{prefix}_{timestamp}.csv"
+    filename = f"../data/combined_data/{prefix}_{timestamp}.csv"
     df.to_csv(filename, index=False)
     print(f"\nData saved to {filename}")
     return filename
