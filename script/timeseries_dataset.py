@@ -1,7 +1,6 @@
 import pandas as pd
 
-# Load the master dataset
-master_file = pd.read_csv("../data/processed/clean_master_file1.csv", parse_dates=["date"], index_col="date")
+master_file = pd.read_csv("../data/MERGE/master_file_merged.csv", parse_dates=["date"], index_col="date")
 
 # Ensure the index is monthly and continuous
 full_index = pd.date_range(start=master_file.index.min(), end=master_file.index.max(), freq="MS")
@@ -9,8 +8,7 @@ full_index = pd.date_range(start=master_file.index.min(), end=master_file.index.
 # Extract all country codes from column suffixes (e.g., GDP_CAN → CAN)
 countries = sorted({col.split("_")[-1] for col in master_file.columns if "_" in col})
 
-# Path to save output
-output_path = "../data/summary_tables/country_aligned_timeseries1.xlsx"
+output_path = "../data/summary_tables/country_aligned_timeseries_merged.xlsx"
 
 # Save one sheet per country
 with pd.ExcelWriter(output_path) as writer:
@@ -26,6 +24,7 @@ with pd.ExcelWriter(output_path) as writer:
 
         # Reindex to create a balanced time series
         country_df = country_df.reindex(full_index)
+        country_df.index = country_df.index.to_period("M").strftime("%Y-%m")
         country_df.index.name = "date"
 
         # Drop rows where all values are NaN
