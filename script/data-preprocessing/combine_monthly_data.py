@@ -3,7 +3,7 @@ from pathlib import Path
 
 from IPython.core.display_functions import display
 
-data_dir = Path("../../data/manual-data/")
+data_dir = Path("../../data/raw/manual-data/")
 csv_files = sorted(data_dir.glob("*.csv"))
 
 merged_df = None

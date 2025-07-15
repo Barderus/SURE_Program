@@ -1,6 +1,6 @@
 import pandas as pd
 
-master_file = pd.read_csv("../../data/MERGE/master_file_merged.csv", parse_dates=["date"], index_col="date")
+master_file = pd.read_csv("../../data/merge_data/master_file_merged.csv", parse_dates=["date"], index_col="date")
 
 # Ensure the index is monthly and continuous
 full_index = pd.date_range(start=master_file.index.min(), end=master_file.index.max(), freq="MS")
