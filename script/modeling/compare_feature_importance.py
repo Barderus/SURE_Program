@@ -37,6 +37,6 @@ for target in targets:
     sns.barplot(data=plot_df, y="Feature", x="Importance", hue="Model")
     plt.title(f"Top {top_n} Feature Importances: RFC vs XGBoost for {target.upper()}")
     plt.tight_layout()
-    output_path = os.path.join("../../data/feature_importance", f"feature_importance_comparison_{target}.png")
+    output_path = os.path.join("../../images/modeling", f"feature_importance_comparison_{target}.png")
     plt.savefig(output_path)
     plt.show()

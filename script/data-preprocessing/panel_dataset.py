@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv("../../data/MERGE/master_file_merged.csv", parse_dates=["date"])
+df = pd.read_csv("../../data/merge_data/master_file_merged.csv", parse_dates=["date"])
 
 # Filter from 1995 onward
 df = df[df["date"] >= "1995-01-01"]
