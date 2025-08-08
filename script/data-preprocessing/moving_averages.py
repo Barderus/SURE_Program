@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import re
 
 def normalize_column(name):
@@ -29,7 +30,7 @@ def compute_moving_averages(df, group_col, date_col, target_cols, windows):
     return df
 
 if __name__ == "__main__":
-    input_path = "../../data/summary_tables/panel_dataset_feat_eng.xlsx"
+    input_path = "../../data/datasets/panel_dataset_feat_eng.xlsx"
     df = pd.read_excel(input_path)
 
     # Normalize all column names (Remove white space, etc.)
@@ -67,6 +68,20 @@ if __name__ == "__main__":
 
     # Drop unnamed columns and fully empty columns
     df_with_ma = df_with_ma.loc[:, ~df_with_ma.columns.str.contains("^Unnamed")]
+
+    # Choose one country (e.g., USA)
+    country_to_plot = "USA"
+    df_country = df_with_ma[df_with_ma["Country"] == country_to_plot]
+
+    plt.figure(figsize=(10, 4))
+    plt.plot(df_country['date'], df_country['INF (%)'], label='Raw Inflation', alpha=0.5)
+    plt.plot(df_country['date'], df_country['INF (%)_MA12'], label='12-Month Moving Average', linewidth=2)
+    plt.title(f'Inflation in {country_to_plot}: Raw vs 12-Month Moving Average')
+    plt.xlabel('Date')
+    plt.ylabel('Inflation (%)')
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
 
 # Save result
     output_path = "../../data/summary_tables/panel_dataset_feat_eng.xlsx"

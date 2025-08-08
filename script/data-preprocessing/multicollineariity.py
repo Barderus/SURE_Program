@@ -4,7 +4,7 @@ from statsmodels.tools.tools import add_constant
 from statsmodels.api import OLS
 
 # Load your dataset
-df = pd.read_excel("../../data/summary_tables/panel_dataset_feat_eng.xlsx")
+df = pd.read_excel("../data/summary_tables/panel_dataset_feat_eng.xlsx")
 
 # Columns to exclude (non-features or dummies)
 excluded_cols = [
